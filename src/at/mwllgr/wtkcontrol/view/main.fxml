@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane alignment="center" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="750.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.mwllgr.wtkcontrol.controller.MainController">
+   <rowConstraints>
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="33.0" prefHeight="65.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="15.0" prefHeight="15.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="2.0" prefHeight="150.0" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="15.0" prefHeight="45.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="150.0" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="15.0" prefHeight="60.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="82.0" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="15.0" prefHeight="45.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="82.0" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="82.0" vgrow="NEVER" />
+   </rowConstraints>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="89.0" prefWidth="83.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="80.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="340.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="15.0" prefWidth="310.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="340.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="330.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="370.0" />
+   </columnConstraints>
+   <children>
+      <TableView maxWidth="1.7976931348623157E308" prefHeight="178.0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
+          <placeholder>
+              <Label text="Keine Werte eingelesen" />
+          </placeholder>
+        <columns>
+          <TableColumn editable="false" prefWidth="75.0" text="Name" />
+          <TableColumn editable="false" prefWidth="75.0" text="Wert" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <GridPane.margin>
+            <Insets left="7.0" />
+         </GridPane.margin>
+      </TableView>
+      <Button fx:id="btnSync" disable="true" mnemonicParsing="false" text="Zeitsync.">
+         <GridPane.margin>
+            <Insets left="7.0" />
+         </GridPane.margin></Button>
+      <Button fx:id="btnRead" disable="true" mnemonicParsing="false" text="Einlesen" GridPane.columnIndex="1" />
+      <Button fx:id="btnWakeup" disable="true" mnemonicParsing="false" text="Wakeup" GridPane.columnIndex="3" />
+      <Button fx:id="btnClearBuffer" mnemonicParsing="false" text="Buffer leeren" GridPane.columnIndex="4" />
+      <Button fx:id="btnOpenClosePort" mnemonicParsing="false" onAction="#openOrClosePort" text="Port öffnen" GridPane.columnIndex="5" GridPane.halignment="RIGHT" />
+      <Label minHeight="-Infinity" prefHeight="15.0" text="Rohdaten:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="1" />
+      <TextArea fx:id="txtRaw" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Erhaltene Bytes" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets right="7.0" />
+         </GridPane.margin></TextArea>
+      <Label text="Eingelesene Daten:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+      <TextArea fx:id="txtRead" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Verarbeitete Bytes mit Werten" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets right="7.0" />
+         </GridPane.margin></TextArea>
+      <TextArea fx:id="txtCrcCalc" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Bytes, die zur CRC-Berechnung verwendet werden" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="6">
+         <GridPane.margin>
+            <Insets right="7.0" />
+         </GridPane.margin></TextArea>
+      <TextArea fx:id="txtCrc" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Erhaltene und berechnete CRC-Prüfsumme" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="8">
+         <GridPane.margin>
+            <Insets right="7.0" />
+         </GridPane.margin></TextArea>
+      <CheckBox fx:id="chkLogger" disable="true" mnemonicParsing="false" text="Logger" GridPane.rowIndex="9">
+         <GridPane.margin>
+            <Insets left="7.0" />
+         </GridPane.margin></CheckBox>
+      <Button fx:id="btnSettings" mnemonicParsing="false" text="Einstellg." GridPane.columnIndex="1" GridPane.rowIndex="9" />
+      <Label snapToPixel="false" text="WALLINGER&#10;3AHIF" GridPane.columnIndex="6" GridPane.rowIndex="9" />
+      <Button fx:id="btnImport" mnemonicParsing="false" text="Import" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
+      <Button fx:id="btnExport" mnemonicParsing="false" text="Export" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+      <Button fx:id="btnAddressList" mnemonicParsing="false" text="Adressliste" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <Label text="Daten für CRC-Berechnung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="5" />
+      <Label text="CRC-Überprüfung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="7" />
+      <ComboBox fx:id="cmbPorts" editable="true" prefWidth="150.0" promptText="Port" GridPane.columnIndex="6" />
+   </children>
+</GridPane>
