@@ -1,21 +1,25 @@
 package at.mwllgr.wtkcontrol.controller;
 
+import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class MainController {
     @FXML
     private ComboBox<String> cmbPorts;
     @FXML
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnImport, btnExport;
-    private final SerialController serialComm;
+    final FileChooser fileChooser = new FileChooser();
 
-    public MainController() {
-        serialComm = new SerialController();
-    }
+    private final SerialController serialComm = new SerialController();
+    private final Repository repository = new Repository();
 
     @FXML
     public void initialize() {
@@ -64,5 +68,17 @@ public class MainController {
     @FXML
     private void sendWakeupCmd(ActionEvent event) {
         serialComm.sendWakeupCmd();
+    }
+
+    @FXML
+    private void selectAddressList(ActionEvent event) {
+        fileChooser.setTitle("Adressliste auswählen");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(".csv-Dateien", "*.csv"),
+                new FileChooser.ExtensionFilter(".txt-Dateien", "*.txt"),
+                new FileChooser.ExtensionFilter("Alle Dateien", "*.*")
+        );
+        File list = fileChooser.showOpenDialog(((Node)event.getTarget()).getScene().getWindow());
+        if(list != null) repository.setAddressList(list);
     }
 }
