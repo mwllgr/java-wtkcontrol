@@ -1,12 +1,11 @@
 package at.mwllgr.wtkcontrol.controller;
 
+import at.mwllgr.wtkcontrol.globals.CommandModes;
 import at.mwllgr.wtkcontrol.listener.SerialListener;
 import com.fazecast.jSerialComm.*;
 import javafx.scene.control.Alert;
 
 public class SerialController {
-    private static final byte[] CMD_WAKEUP = { 0x41, 0x54, 0x0D }; // "AT" + carriage return
-
     SerialPort port; // Currently used serial port
 
     /**
@@ -99,7 +98,7 @@ public class SerialController {
      */
     public void sendWakeupCmd() {
         System.out.print("Sending wake up command... ");
-        this.writeBytesRaw(CMD_WAKEUP);
+        this.writeBytesRaw(CommandModes.WAKEUP);
     }
 
     /**
