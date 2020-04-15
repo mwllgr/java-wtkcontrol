@@ -5,6 +5,8 @@ import com.fazecast.jSerialComm.*;
 import javafx.scene.control.Alert;
 
 public class SerialController {
+    private static final byte[] CMD_WAKEUP = { 0x41, 0x54, 0x0D }; // "AT" + carriage return
+
     SerialPort port; // Currently used serial port
 
     /**
@@ -90,5 +92,38 @@ public class SerialController {
      */
     public SerialPort getPort() {
         return this.port;
+    }
+
+    /**
+     * Sends "AT" and a carriage return
+     */
+    public void sendWakeupCmd() {
+        System.out.print("Sending wake up command... ");
+        this.writeBytesRaw(CMD_WAKEUP);
+    }
+
+    /**
+     * Writes the byte array to the serial port.
+     * @param buffer Bytes to write
+     * @return -1 on error
+     */
+    public int writeBytesRaw(byte[] buffer) {
+        int result = this.port.writeBytes(buffer, buffer.length);
+
+        if(result != -1) {
+            System.out.println("OK");
+        }
+        else
+        {
+            System.err.println("ERR");
+        }
+
+        System.out.print("Sent bytes: ");
+        for (byte sendByte : buffer) {
+            System.out.print(String.format("%02X ", sendByte));
+        }
+        System.out.println();
+
+        return result;
     }
 }
