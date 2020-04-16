@@ -5,6 +5,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
@@ -79,6 +80,18 @@ public class MainController {
                 new FileChooser.ExtensionFilter("Alle Dateien", "*.*")
         );
         File list = fileChooser.showOpenDialog(((Node)event.getTarget()).getScene().getWindow());
-        if(list != null) repository.setAddressList(list);
+
+        boolean success = false;
+        if(list != null) success = repository.setAddressList(list);
+
+        if(!success) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Dateifehler");
+
+            alert.setHeaderText(null);
+            alert.setContentText("Die ausgewählte Adressdatei konnte nicht gelesen werden.");
+
+            alert.showAndWait();
+        }
     }
 }

@@ -118,9 +118,7 @@ public class SerialController {
         }
 
         System.out.print("Sent bytes: ");
-        for (byte sendByte : buffer) {
-            System.out.print(String.format("%02X ", sendByte));
-        }
+        System.out.println(Tools.getByteArrayAsHexString(buffer));
         System.out.println();
 
         return result;

@@ -1,6 +1,5 @@
-# Waterkotte Resümat CD4 - Firmwareversion 8011
-# Name,Menue,Addresse,Laenge,Typ,Min,Max,ReadOnly
-Gesamt,-.--,00,11B,0,0,0,1
+Name,Menue,Addresse,Laenge,Typ,Min,Max,ReadOnly
+BYTES,-.--,00,11B,0,0,0,1
 Temp-Aussen,0.00,00,4,f,0,0,1
 Temp-Aussen-24h,0.01,04,4,f,0,0,1
 Temp-Aussen-1h,0.02,08,4,f,0,0,1
