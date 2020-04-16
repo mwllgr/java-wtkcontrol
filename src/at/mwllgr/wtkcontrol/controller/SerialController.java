@@ -8,10 +8,21 @@ import javafx.scene.control.Alert;
 import java.nio.ByteBuffer;
 
 public class SerialController {
-    public static final byte[] FULLREAD_START_ADDR = {0x00, 0x00};
+    public static final byte[] FULLREAD_START_ADDR = { 0x00, 0x00 };
     static final byte[] COMMAND_START = { 0x10, 0x02 };
     static final byte[] SLAVE_ADDR = { 0x01 };
     static final byte[] COMMAND_END = { 0x10, 0x03 };
+
+    // Singleton
+    private static SerialController instance;
+
+    private SerialController() { }
+    public static SerialController getInstance () {
+        if (SerialController.instance == null) {
+            SerialController.instance = new SerialController();
+        }
+        return SerialController.instance;
+    }
 
     SerialPort port; // Currently used serial port
     SerialListener listener;
@@ -111,7 +122,14 @@ public class SerialController {
         this.writeBytesRaw(CommandMode.WAKEUP);
     }
 
+    /**
+     * Sends a command with the specified mode, address and length/bytes.
+     * @param mode Read, write or DateTime
+     * @param addr Start address
+     * @param bytes Length or bytes to write
+     */
     public void sendCommand(byte[] mode, byte[] addr, byte[] bytes) {
+        // Prepare bytes for CRC calculation
         byte[] crcCalcBytes = new byte[SLAVE_ADDR.length + mode.length + addr.length + bytes.length];
         ByteBuffer crcBuff = ByteBuffer.wrap(crcCalcBytes);
         crcBuff.put(SLAVE_ADDR);
@@ -120,7 +138,10 @@ public class SerialController {
         crcBuff.put(bytes);
         crcCalcBytes = crcBuff.array();
 
+        // Calculate the CRC
         byte[] crc = CRC16.calculate(crcCalcBytes);
+
+        // Prepare array for sending all the needed bytes
         byte[] allBytes = new byte[COMMAND_START.length + crcCalcBytes.length + COMMAND_END.length + crc.length];
 
         ByteBuffer buff = ByteBuffer.wrap(allBytes);
@@ -129,6 +150,7 @@ public class SerialController {
         buff.put(COMMAND_END);
         buff.put(crc);
 
+        // Watch the magic happen
         writeBytesRaw(buff.array());
     }
 
