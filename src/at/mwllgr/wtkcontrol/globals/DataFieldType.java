@@ -1,6 +1,6 @@
 package at.mwllgr.wtkcontrol.globals;
 
-public enum DataFieldTypes {
+public enum DataFieldType {
     BINARY,
     FLOAT,
     UNSIGNED_CHAR,

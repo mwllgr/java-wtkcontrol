@@ -1,7 +1,7 @@
 package at.mwllgr.wtkcontrol.globals;
 
-public final class DataFieldOffsets {
-    private DataFieldOffsets() { }
+public final class DataFieldOffset {
+    private DataFieldOffset() { }
 
     public static final int NAME = 0;
     public static final int MENU = 1;

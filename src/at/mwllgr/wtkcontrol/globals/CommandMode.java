@@ -1,7 +1,7 @@
 package at.mwllgr.wtkcontrol.globals;
 
-public final class CommandModes {
-    private CommandModes() { }
+public final class CommandMode {
+    private CommandMode() { }
 
     public static final byte WRITE_MEMORY = 0x13;
     public static final byte WRITE_DATETIME = 0x14;
