@@ -35,8 +35,8 @@ public class DataField {
     @Override
     public String toString() {
         return this.getName() + " (M: " + this.getMenuEntry()
-                + ", A: " + Tools.getByteArrayAsHexString(this.getAddress())
-                + ", L: " + Tools.getByteArrayAsHexString(this.getLength())
+                + ", A: " + Tools.getByteArrayAsHexString(this.getAddress(), true)
+                + ", L: " + Tools.getByteArrayAsHexString(this.getLength(), true)
                 + ", T: " + this.getType().toString() + ")";
     }
 

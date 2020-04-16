@@ -1,5 +1,6 @@
 package at.mwllgr.wtkcontrol.controller;
 
+import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.event.ActionEvent;
@@ -92,5 +93,10 @@ public class MainController {
 
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void fullRead(ActionEvent event) {
+        repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repository.getBytesToRead());
     }
 }

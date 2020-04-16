@@ -32,10 +32,11 @@ public final class Tools {
         return data;
     }
 
-    public static String getByteArrayAsHexString(byte[] bytes) {
+    public static String getByteArrayAsHexString(byte[] bytes, boolean spaces) {
         StringBuilder sb = new StringBuilder();
         for (byte currByte : bytes) {
-            sb.append(String.format("%02X ", currByte));
+            sb.append(String.format("%02X", currByte));
+            if(spaces) sb.append(" ");
         }
         return sb.toString().trim();
     }

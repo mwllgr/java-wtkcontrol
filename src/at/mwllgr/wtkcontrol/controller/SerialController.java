@@ -5,7 +5,14 @@ import at.mwllgr.wtkcontrol.listener.SerialListener;
 import com.fazecast.jSerialComm.*;
 import javafx.scene.control.Alert;
 
+import java.nio.ByteBuffer;
+
 public class SerialController {
+    public static final byte[] FULLREAD_START_ADDR = {0x00, 0x00};
+    static final byte[] COMMAND_START = { 0x10, 0x02 };
+    static final byte[] SLAVE_ADDR = { 0x01 };
+    static final byte[] COMMAND_END = { 0x10, 0x03 };
+
     SerialPort port; // Currently used serial port
     SerialListener listener;
 
@@ -59,6 +66,7 @@ public class SerialController {
         } else {
             System.out.print("Opening " + this.port.getSystemPortName() + "... ");
 
+            this.port.setBaudRate(9600);
             if (this.port.openPort()) {
                 // Serial port opened successfully
                 System.out.println("OK");
@@ -103,6 +111,27 @@ public class SerialController {
         this.writeBytesRaw(CommandMode.WAKEUP);
     }
 
+    public void sendCommand(byte[] mode, byte[] addr, byte[] bytes) {
+        byte[] crcCalcBytes = new byte[SLAVE_ADDR.length + mode.length + addr.length + bytes.length];
+        ByteBuffer crcBuff = ByteBuffer.wrap(crcCalcBytes);
+        crcBuff.put(SLAVE_ADDR);
+        crcBuff.put(mode);
+        crcBuff.put(addr);
+        crcBuff.put(bytes);
+        crcCalcBytes = crcBuff.array();
+
+        byte[] crc = CRC16.calculate(crcCalcBytes);
+        byte[] allBytes = new byte[COMMAND_START.length + crcCalcBytes.length + COMMAND_END.length + crc.length];
+
+        ByteBuffer buff = ByteBuffer.wrap(allBytes);
+        buff.put(COMMAND_START);
+        buff.put(crcCalcBytes);
+        buff.put(COMMAND_END);
+        buff.put(crc);
+
+        writeBytesRaw(buff.array());
+    }
+
     /**
      * Writes the byte array to the serial port.
      * @param buffer Bytes to write
@@ -120,7 +149,7 @@ public class SerialController {
         }
 
         System.out.print("Sent bytes: ");
-        System.out.println(Tools.getByteArrayAsHexString(buffer));
+        System.out.println(Tools.getByteArrayAsHexString(buffer, true));
         System.out.println();
 
         return result;

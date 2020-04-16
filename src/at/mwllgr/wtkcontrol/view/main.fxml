@@ -46,7 +46,7 @@
          <GridPane.margin>
             <Insets left="7.0" />
          </GridPane.margin></Button>
-      <Button fx:id="btnRead" disable="true" mnemonicParsing="false" text="Einlesen" GridPane.columnIndex="1" />
+      <Button fx:id="btnRead" mnemonicParsing="false" onAction="#fullRead" text="Einlesen" GridPane.columnIndex="1" />
       <Button fx:id="btnWakeup" disable="true" mnemonicParsing="false" onAction="#sendWakeupCmd" text="Wakeup" GridPane.columnIndex="3" />
       <Button fx:id="btnClearBuffer" mnemonicParsing="false" text="Buffer leeren" GridPane.columnIndex="4" />
       <Button fx:id="btnOpenClosePort" mnemonicParsing="false" onAction="#openOrClosePort" text="Port öffnen" GridPane.columnIndex="5" GridPane.halignment="RIGHT" />

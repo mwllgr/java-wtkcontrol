@@ -28,6 +28,10 @@ public class Repository {
         return serialComm;
     }
 
+    public byte[] getBytesToRead() {
+        return bytesToRead;
+    }
+
     public boolean setAddressList(File addressList) {
         if(fields == null) {
             fields = new HashMap<>();
@@ -60,7 +64,7 @@ public class Repository {
 
         if(dataFieldCounter == 0) {
             bytesToRead = Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH]);
-            System.out.println("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead));
+            System.out.println("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead, true));
         }
         else
         {
