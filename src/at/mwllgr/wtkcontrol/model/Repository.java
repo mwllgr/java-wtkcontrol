@@ -2,7 +2,7 @@ package at.mwllgr.wtkcontrol.model;
 
 import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
-import at.mwllgr.wtkcontrol.globals.DataFieldOffsets;
+import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,8 +58,20 @@ public class Repository {
         String[] splitLine = line.split(CSV_SEPARATOR);
 
         if(dataFieldCounter == 0) {
-            bytesToRead = Tools.hexStringToByteArray(splitLine[DataFieldOffsets.LENGTH]);
+            bytesToRead = Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH]);
             System.out.println("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead));
+        }
+        else
+        {
+            DataField currentField = new DataField(
+                    splitLine[DataFieldOffset.NAME],
+                    splitLine[DataFieldOffset.MENU],
+                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.ADDRESS]),
+                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH])
+            );
+
+            System.out.println("Add field from CSV: " + currentField.toString());
+            fields.put(currentField.getName(), currentField);
         }
 
         dataFieldCounter++;

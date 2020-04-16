@@ -1,6 +1,6 @@
 package at.mwllgr.wtkcontrol.controller;
 
-import at.mwllgr.wtkcontrol.globals.CommandModes;
+import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.listener.SerialListener;
 import com.fazecast.jSerialComm.*;
 import javafx.scene.control.Alert;
@@ -98,7 +98,7 @@ public class SerialController {
      */
     public void sendWakeupCmd() {
         System.out.print("Sending wake up command... ");
-        this.writeBytesRaw(CommandModes.WAKEUP);
+        this.writeBytesRaw(CommandMode.WAKEUP);
     }
 
     /**

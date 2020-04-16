@@ -33,6 +33,6 @@ public final class Tools {
         for (byte currByte : bytes) {
             sb.append(String.format("%02X ", currByte));
         }
-        return sb.toString();
+        return sb.toString().trim();
     }
 }
