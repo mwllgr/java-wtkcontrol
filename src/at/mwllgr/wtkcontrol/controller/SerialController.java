@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 
 public class SerialController {
     SerialPort port; // Currently used serial port
+    SerialListener listener;
 
     /**
      * Gets an array of available serial ports.
@@ -63,7 +64,8 @@ public class SerialController {
                 System.out.println("OK");
 
                 // Add listener
-                port.addDataListener(new SerialListener(port));
+                listener = new SerialListener(port);
+                port.addDataListener(listener);
             } else {
                 System.err.println("ERR");
                 Alert alert = new Alert(Alert.AlertType.WARNING);

@@ -9,6 +9,7 @@ public class SerialListener implements SerialPortDataListener {
 
     public SerialListener(SerialPort port) {
         this.port = port;
+        System.out.println("SerialListener: Started!");
     }
 
     @Override

@@ -2,6 +2,8 @@ package at.mwllgr.wtkcontrol.controller;
 
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 
+import java.math.BigInteger;
+
 public final class Tools {
     private Tools() { }
 
@@ -36,5 +38,27 @@ public final class Tools {
             sb.append(String.format("%02X ", currByte));
         }
         return sb.toString().trim();
+    }
+
+    /**
+     * Calculates the CRC-16_BUYPASS.
+     * Source: https://introcs.cs.princeton.edu/java/61data/CRC16CCITT.java
+     * @param bytes Bytes to calculate the CRC of
+     * @return CRC-16_BUYPASS
+     */
+    public static byte[] getCrc16(byte[] bytes) {
+        int crc = 0x0000; // Initial value
+        int polynomial = 0x8005;
+
+        for (byte currByte : bytes) {
+            for (int i = 0; i < 8; i++) {
+                boolean bit = ((currByte   >> (7-i) & 1) == 1);
+                boolean c15 = ((crc >> 15    & 1) == 1);
+                crc <<= 1;
+                if (c15 ^ bit) crc ^= polynomial;
+            }
+        }
+
+        return BigInteger.valueOf(crc).toByteArray();
     }
 }
