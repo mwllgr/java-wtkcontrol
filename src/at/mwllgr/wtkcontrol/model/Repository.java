@@ -14,6 +14,15 @@ import java.util.stream.Stream;
 public class Repository {
     static final String CSV_SEPARATOR = ",";
     private final SerialController serialComm = new SerialController();
+    private static Repository instance;
+
+    private Repository() { }
+    public static Repository getInstance () {
+        if (Repository.instance == null) {
+            Repository.instance = new Repository ();
+        }
+        return Repository.instance;
+    }
 
     HashMap<String, DataField> fields;
     private File addressList;

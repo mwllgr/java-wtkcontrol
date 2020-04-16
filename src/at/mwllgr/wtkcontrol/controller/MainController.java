@@ -20,7 +20,7 @@ public class MainController {
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnImport, btnExport;
     final FileChooser fileChooser = new FileChooser();
 
-    private final Repository repository = new Repository();
+    private final Repository repository = Repository.getInstance();
 
     @FXML
     public void initialize() {
