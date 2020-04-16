@@ -18,6 +18,7 @@ public class DataField {
         this.setMenuEntry(menuEntry);
         this.setAddress(address);
         this.setLength(length);
+        this.setType(type);
     }
 
     public DataField(String name, String menuEntry, byte[] address, byte[] length, DataFieldType type, double min, double max) {
@@ -36,7 +37,7 @@ public class DataField {
         return this.getName() + " (M: " + this.getMenuEntry()
                 + ", A: " + Tools.getByteArrayAsHexString(this.getAddress())
                 + ", L: " + Tools.getByteArrayAsHexString(this.getLength())
-                + ")";
+                + ", T: " + this.getType().toString() + ")";
     }
 
     public String getName() {

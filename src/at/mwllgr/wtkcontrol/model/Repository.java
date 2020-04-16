@@ -3,6 +3,7 @@ package at.mwllgr.wtkcontrol.model;
 import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
+import at.mwllgr.wtkcontrol.globals.DataFieldType;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,10 +65,14 @@ public class Repository {
         else
         {
             DataField currentField = new DataField(
-                    splitLine[DataFieldOffset.NAME],
-                    splitLine[DataFieldOffset.MENU],
-                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.ADDRESS]),
-                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH])
+                    splitLine[DataFieldOffset.NAME].trim(),
+                    splitLine[DataFieldOffset.MENU].trim(),
+                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.ADDRESS].trim()),
+                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH].trim()),
+                    DataFieldType.fromString(splitLine[DataFieldOffset.TYPE].trim()),
+                    Double.parseDouble(splitLine[DataFieldOffset.MIN].trim()),
+                    Double.parseDouble(splitLine[DataFieldOffset.MAX].trim()),
+                    Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
             );
 
             System.out.println("Add field from CSV: " + currentField.toString());
