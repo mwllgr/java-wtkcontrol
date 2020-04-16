@@ -7,6 +7,7 @@ import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,6 +50,7 @@ public class SerialListener implements SerialPortDataListener {
         byte[] responseBytes = Tools.hexStringToByteArray(response);
         if(responseBytes[1] == ResponseMode.READ_RESPONSE) {
             System.out.println("Received response: READ_RESPONSE");
+            Repository.getInstance().parseResponse(Arrays.copyOfRange(responseBytes, 2, responseBytes.length));
         }
         else if(responseBytes[1] == ResponseMode.WRITE_RESPONSE)
         {

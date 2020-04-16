@@ -7,8 +7,10 @@ import at.mwllgr.wtkcontrol.globals.DataFieldType;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.stream.Stream;
 
 public class Repository {
@@ -50,7 +52,7 @@ public class Repository {
      */
     public boolean setAddressList(File addressList) {
         if(fields == null) {
-            fields = new HashMap<>();
+            fields = new LinkedHashMap<>();
         }
         if(addressList.exists() && addressList.canRead()) {
             this.addressList = addressList;
@@ -112,5 +114,32 @@ public class Repository {
         }
 
         dataFieldCounter++;
+    }
+
+    public void parseResponse(byte[] responseBytes) {
+        int offset = 0;
+
+        for (String key : fields.keySet()) {
+            DataField field = fields.get(key);
+
+            byte[] byteValue = new byte[field.length[0]];
+
+            int addrInt = new BigInteger(field.address).intValue();
+            int bytesToReadInt = new BigInteger(bytesToRead).intValue();
+
+            for(int i = 0; i < field.length[0]; i++) {
+                if(addrInt < bytesToReadInt - 2) {
+                    int dleFirst = responseBytes[addrInt + i];
+                    int dleSecond = responseBytes[addrInt + i + 1];
+                    if(dleFirst == 0x10 && dleSecond == 0x10) {
+                        offset++;
+                    }
+                }
+
+                byteValue[i] = responseBytes[addrInt + i + offset];
+            }
+
+            System.out.println(key + "-V\t\t" + Tools.getByteArrayAsHexString(byteValue, true));
+        }
     }
 }

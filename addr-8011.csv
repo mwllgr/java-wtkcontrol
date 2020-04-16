@@ -51,7 +51,7 @@ Ausfall-Temp-Vorlauf,5.12,80,4,f,0,0,1
 Ausfall-Temp-Kondensator,5.13,84,4,f,0,0,1
 Ausfall-Temp-Ww,5.14,88,4,f,0,0,1
 Ausfall-RaumAusfall,5.15,8C,1,b,0,0,1
-Ausfall-RaumKurzsch,5.16,8C,1,b,0,0,1
+Ausfall-RaumKurzsch,5.16,8D,1,b,0,0,1
 Ausfall-Temp-Raum,5.17,8E,4,f,0,0,1
 Ausfall-Reset,5.18,92,1,c,0,1,0
 Kennwort,6.00,93,1,c,0,255,0
