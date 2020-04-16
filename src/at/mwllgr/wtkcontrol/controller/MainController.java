@@ -19,7 +19,6 @@ public class MainController {
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnImport, btnExport;
     final FileChooser fileChooser = new FileChooser();
 
-    private final SerialController serialComm = new SerialController();
     private final Repository repository = new Repository();
 
     @FXML
@@ -32,7 +31,7 @@ public class MainController {
      * and sets it to the first one if it's only one.
      */
     public void setCmbPorts() {
-        SerialPort[] ports = serialComm.getSerialPorts();
+        SerialPort[] ports = repository.getSerialComm().getSerialPorts();
         for (SerialPort port : ports) {
             String portName = port.getSystemPortName();
             cmbPorts.getItems().add(portName);
@@ -49,9 +48,9 @@ public class MainController {
      */
     @FXML
     private void openOrClosePort(ActionEvent event) {
-        serialComm.setCommPort(cmbPorts.getValue());
+        repository.getSerialComm().setCommPort(cmbPorts.getValue());
 
-        if(serialComm.getPortState()) {
+        if(repository.getSerialComm().getPortState()) {
             // Port now opened
             btnOpenClosePort.setText("Port schließen");
             btnWakeup.setDisable(false);
@@ -68,7 +67,7 @@ public class MainController {
 
     @FXML
     private void sendWakeupCmd(ActionEvent event) {
-        serialComm.sendWakeupCmd();
+        repository.getSerialComm().sendWakeupCmd();
     }
 
     @FXML

@@ -1,5 +1,6 @@
 package at.mwllgr.wtkcontrol.model;
 
+import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffsets;
 
@@ -11,6 +12,7 @@ import java.util.stream.Stream;
 
 public class Repository {
     static final String CSV_SEPARATOR = ",";
+    private final SerialController serialComm = new SerialController();
 
     HashMap<String, DataField> fields;
     private File addressList;
@@ -19,6 +21,10 @@ public class Repository {
 
     public File getAddressList() {
         return addressList;
+    }
+
+    public SerialController getSerialComm() {
+        return serialComm;
     }
 
     public boolean setAddressList(File addressList) {
