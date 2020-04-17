@@ -12,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.nio.ByteBuffer;
 
 public class MainController {
     @FXML
@@ -67,11 +66,21 @@ public class MainController {
         }
     }
 
+    /**
+     * Manually sends the wake-up command to the heating controller.
+     * Needed when the controller suddenly doesn't respond anymore.
+     * @param event Button event
+     */
     @FXML
     private void sendWakeupCmd(ActionEvent event) {
         repository.getSerialComm().sendWakeupCmd();
     }
 
+    /**
+     * Opens a file chooser and allows the user to select a CSV file.
+     * The Repository parses the file after that.
+     * @param event Button event
+     */
     @FXML
     private void selectAddressList(ActionEvent event) {
         fileChooser.setTitle("Adressliste auswählen");
@@ -96,6 +105,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Manually requests the whole data as listed in the CSV file.
+     * @param event Button event
+     */
     @FXML
     private void fullRead(ActionEvent event) {
         repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repository.getBytesToRead());
