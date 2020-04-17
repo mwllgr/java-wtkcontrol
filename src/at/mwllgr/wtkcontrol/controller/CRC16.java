@@ -3,6 +3,22 @@ package at.mwllgr.wtkcontrol.controller;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+/**
+ * Class for CRC calculation.
+ *
+ * The heating controller uses CRC16_BUYPASS.
+ *
+ * CRC-Order:               16
+ * Input type:              Hex
+ * Polynomial:              0x8005
+ * Initial value:           0x0
+ * LSB/Final Xor Value:     0x0
+ * Input/data reflected:    No
+ * Result reflected:        No
+ *
+ * Source for doCalculation:
+ * https://github.com/NordicSemiconductor/Android-BLE-Common-Library/blob/master/ble-common/src/main/java/no/nordicsemi/android/ble/common/util/CRC16.java
+ */
 public final class CRC16 {
     public static byte[] calculate(byte[] bytes) {
         byte[] calculated = BigInteger.valueOf(doCalculation(0x8005, 0x0000, bytes, 0x00, bytes.length, false, false, 0x0000)).toByteArray();
