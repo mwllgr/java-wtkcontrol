@@ -4,6 +4,7 @@ import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.model.types.DateDataField;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,6 +104,12 @@ public class Repository {
                     Float.parseFloat(splitLine[DataFieldOffset.MAX].trim()),
                     Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
             );
+
+            switch(currentField.getType()) {
+                case DATE:
+                    currentField = new DateDataField(currentField);
+
+            }
 
             System.out.println("Add field from CSV: " + currentField.toString());
             // Add to HashMap

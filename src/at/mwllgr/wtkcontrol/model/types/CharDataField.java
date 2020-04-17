@@ -1,11 +1,18 @@
 package at.mwllgr.wtkcontrol.model.types;
 
+import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.model.DataField;
+
 import java.nio.ByteBuffer;
 import java.time.LocalDate;
 
-public class CharDataField {
+public class CharDataField extends DataField {
     private static final int LENGTH = 1;
     private int value;
+
+    public CharDataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max, boolean readOnly) {
+        super(name, menuEntry, address, length, type, min, max, readOnly);
+    }
 
     public int getValue() {
         return value;

@@ -1,11 +1,18 @@
 package at.mwllgr.wtkcontrol.model.types;
 
+import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.model.DataField;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class TimeDataField {
+public class TimeDataField extends DataField {
     private static int LENGTH = 3;
     private LocalTime value;
+
+    public TimeDataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max, boolean readOnly) {
+        super(name, menuEntry, address, length, type, min, max, readOnly);
+    }
 
     public LocalTime getValue() {
         return value;

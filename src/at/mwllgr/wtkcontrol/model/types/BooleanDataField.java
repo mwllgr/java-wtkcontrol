@@ -1,8 +1,17 @@
 package at.mwllgr.wtkcontrol.model.types;
 
-public class BooleanDataField {
+import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.model.DataField;
+
+public class BooleanDataField extends DataField {
     private static int LENGTH = 1;
     private boolean value;
+
+    public BooleanDataField(DataField dataField) {
+        super(dataField.getName(), dataField.getMenuEntry(), dataField.getAddress(),
+                dataField.getLength(), dataField.getType(), dataField.getMin(),
+                dataField.getMax(), dataField.isReadOnly());
+    }
 
     public boolean getValue() {
         return value;

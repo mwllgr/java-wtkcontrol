@@ -10,7 +10,7 @@ public class DataField {
     int length;
     DataFieldType type;
     float min = 0.00f;
-    double max = 0.00f;
+    float max = 0.00f;
     boolean readOnly = false;
 
     public DataField(String name, String menuEntry, int address, int length, DataFieldType type) {
@@ -80,7 +80,7 @@ public class DataField {
         this.type = type;
     }
 
-    public double getMin() {
+    public float getMin() {
         return min;
     }
 
@@ -88,7 +88,7 @@ public class DataField {
         this.min = min;
     }
 
-    public double getMax() {
+    public float getMax() {
         return max;
     }
 

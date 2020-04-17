@@ -1,13 +1,22 @@
 package at.mwllgr.wtkcontrol.model.types;
 
+import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.model.DataField;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DateDataField {
+public class DateDataField extends DataField {
     private static final int LENGTH = 3;
     private LocalDate value;
+
+    public DateDataField(DataField dataField) {
+        super(dataField.getName(), dataField.getMenuEntry(), dataField.getAddress(),
+                dataField.getLength(), dataField.getType(), dataField.getMin(),
+                dataField.getMax(), dataField.isReadOnly());
+    }
 
     public LocalDate getValue() {
         return value;
