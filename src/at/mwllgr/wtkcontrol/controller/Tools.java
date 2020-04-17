@@ -39,28 +39,6 @@ public final class Tools {
         return sb.toString().trim();
     }
 
-    /**
-     * Calculates the CRC-16_BUYPASS.
-     * Source: https://introcs.cs.princeton.edu/java/61data/CRC16CCITT.java
-     * @param bytes Bytes to calculate the CRC of
-     * @return CRC-16_BUYPASS
-     */
-    public static byte[] getCrc16(byte[] bytes) {
-        int crc = 0x0000; // Initial value
-        int polynomial = 0x8005;
-
-        for (byte currByte : bytes) {
-            for (int i = 0; i < 8; i++) {
-                boolean bit = ((currByte   >> (7-i) & 1) == 1);
-                boolean c15 = ((crc >> 15    & 1) == 1);
-                crc <<= 1;
-                if (c15 ^ bit) crc ^= polynomial;
-            }
-        }
-
-        return BigInteger.valueOf(crc).toByteArray();
-    }
-
     public static int hexStringToInt(String hex) {
         return Integer.parseInt(hex, 16);
     }
