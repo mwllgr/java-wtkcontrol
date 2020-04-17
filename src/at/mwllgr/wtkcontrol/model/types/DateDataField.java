@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DateDataField {
-    private static int LENGTH = 3;
+    private static final int LENGTH = 3;
     private LocalDate value;
 
     public LocalDate getValue() {
