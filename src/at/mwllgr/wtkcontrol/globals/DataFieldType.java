@@ -8,7 +8,7 @@ public enum DataFieldType {
     BINARY("b"),
     FLOAT("f"),
     UNSIGNED_CHAR("c"),
-    UNSIGNED_INT("n"),
+    UNSIGNED_SHORT("n"),
     TIME("t"),
     DATE("d");
 
