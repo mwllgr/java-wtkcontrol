@@ -1,5 +1,8 @@
 package at.mwllgr.wtkcontrol.globals;
 
+/**
+ * Contains the offsets as used in the CSV address file.
+ */
 public final class DataFieldOffset {
     private DataFieldOffset() { }
 

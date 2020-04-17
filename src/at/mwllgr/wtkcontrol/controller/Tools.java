@@ -1,7 +1,5 @@
 package at.mwllgr.wtkcontrol.controller;
 
-import at.mwllgr.wtkcontrol.globals.DataFieldType;
-
 import java.math.BigInteger;
 
 public final class Tools {

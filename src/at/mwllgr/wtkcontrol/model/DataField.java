@@ -6,7 +6,7 @@ import at.mwllgr.wtkcontrol.globals.DataFieldType;
 public class DataField {
     String name;
     String menuEntry;
-    int address;
+    int address; // Offset
     int length;
     DataFieldType type;
     double min = 0.00;

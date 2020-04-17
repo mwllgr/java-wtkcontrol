@@ -1,5 +1,6 @@
 package at.mwllgr.wtkcontrol.listener;
 
+import at.mwllgr.wtkcontrol.controller.CRC16;
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.ResponseMode;
 import at.mwllgr.wtkcontrol.model.Repository;
@@ -35,11 +36,12 @@ public class SerialListener implements SerialPortDataListener {
     public void serialEvent(SerialPortEvent event)
     {
         // Only if new data is available
-        if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE) return;
+        if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
+            return;
         byte[] newData = new byte[port.bytesAvailable()];
 
+        port.readBytes(newData, newData.length);
         hexBuffer += Tools.getByteArrayAsHexString(newData, false);
-
         System.out.print(Tools.getByteArrayAsHexString(newData, false));
 
         Pattern pattern = Pattern.compile(COMPLETE_FRAME_REGEX);
@@ -48,10 +50,12 @@ public class SerialListener implements SerialPortDataListener {
         // Check for a complete frame
         if(matcher.find())
         {
+            String crcData = matcher.group(1);
+            String recvCrc = matcher.group(2);
+
             System.out.println("Complete frame received!");
-            // Get the data for CRC calculation
-            System.out.println("CRC Data: " + matcher.group(1));
-            handleResponse(matcher.group(1));
+            System.out.println("CRC Data: " + crcData);
+            handleCompleteFrame(crcData, recvCrc);
             hexBuffer = "";
         }
     }
@@ -59,18 +63,42 @@ public class SerialListener implements SerialPortDataListener {
     /**
      * Parses the received response and checks the response type.
      * Available response types are available in globals.ResponseMode
-     * @param response Received frame as hex string
+     * @param crcData Received frame as hex string
+     * @param recvCrc Received CRC as hex string
      */
-    public void handleResponse(String response) {
-        byte[] responseBytes = Tools.hexStringToByteArray(response);
-        if(responseBytes[1] == ResponseMode.READ_RESPONSE) {
-            System.out.println("Received response: READ_RESPONSE");
-            Repository.getInstance().parseResponse(Arrays.copyOfRange(responseBytes, 2, responseBytes.length));
+    public void handleCompleteFrame(String crcData, String recvCrc) {
+        byte[] responseBytes = Tools.hexStringToByteArray(crcData);
+
+        System.out.print("Checking CRC... ");
+        if(checkCrc(responseBytes, Tools.hexStringToByteArray(recvCrc))) {
+            if (responseBytes[1] == ResponseMode.READ_RESPONSE) {
+                System.out.println(" -> +CRC: OK");
+                System.out.println("Received response: READ_RESPONSE");
+                Repository.getInstance().parseResponse(Arrays.copyOfRange(responseBytes, 2, responseBytes.length));
+            } else if (responseBytes[1] == ResponseMode.WRITE_RESPONSE) {
+                // Write operation ACK
+                System.out.println("Received response: WRITE_RESPONSE");
+            }
         }
-        else if(responseBytes[1] == ResponseMode.WRITE_RESPONSE)
+        else
         {
-            // Write operation ACK
-            System.out.println("Received response: WRITE_RESPONSE");
+            System.err.println(" -> CRC: ERR");
         }
+    }
+
+    /**
+     * Returns true if the receivedCrc for responseBytes is a match.
+     * @param responseBytes Bytes to calculate CRC for
+     * @param recvCrcBytes Received CRC to compare to
+     * @return true = CRC matches
+     */
+    private boolean checkCrc(byte[] responseBytes, byte[] recvCrcBytes) {
+        byte[] calcCrcBytes = CRC16.calculate(responseBytes);
+        System.out.print(
+                "CRC-Recv: " + Tools.getByteArrayAsHexString(recvCrcBytes, false)
+                + " - CRC-Calc: " + Tools.getByteArrayAsHexString(calcCrcBytes, false)
+        );
+
+        return Arrays.equals(calcCrcBytes, recvCrcBytes);
     }
 }

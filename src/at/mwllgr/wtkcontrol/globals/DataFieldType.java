@@ -1,5 +1,9 @@
 package at.mwllgr.wtkcontrol.globals;
 
+/**
+ * Enum for available data types.
+ * Added functions for easier parsing of single-letter codes (as used in the CSV file).
+ */
 public enum DataFieldType {
     BINARY("b"),
     FLOAT("f"),

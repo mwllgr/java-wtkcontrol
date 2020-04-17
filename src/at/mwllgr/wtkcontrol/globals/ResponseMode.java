@@ -1,5 +1,8 @@
 package at.mwllgr.wtkcontrol.globals;
 
+/**
+ * Contains the known response modes for received frames (Heating controller -> PC)
+ */
 public final class ResponseMode {
     private ResponseMode() { }
 
