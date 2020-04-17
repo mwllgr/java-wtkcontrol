@@ -6,14 +6,14 @@ import at.mwllgr.wtkcontrol.globals.DataFieldType;
 public class DataField {
     String name;
     String menuEntry;
-    byte[] address;
-    byte[] length;
+    int address;
+    int length;
     DataFieldType type;
     double min = 0.00;
     double max = 0.00;
     boolean readOnly = false;
 
-    public DataField(String name, String menuEntry, byte[] address, byte[] length, DataFieldType type) {
+    public DataField(String name, String menuEntry, int address, int length, DataFieldType type) {
         this.setName(name);
         this.setMenuEntry(menuEntry);
         this.setAddress(address);
@@ -21,13 +21,13 @@ public class DataField {
         this.setType(type);
     }
 
-    public DataField(String name, String menuEntry, byte[] address, byte[] length, DataFieldType type, double min, double max) {
+    public DataField(String name, String menuEntry, int address, int length, DataFieldType type, double min, double max) {
         this(name, menuEntry, address, length, type);
         this.setMin(min);
         this.setMax(max);
     }
 
-    public DataField(String name, String menuEntry, byte[] address, byte[] length, DataFieldType type, double min, double max, boolean readOnly) {
+    public DataField(String name, String menuEntry, int address, int length, DataFieldType type, double min, double max, boolean readOnly) {
         this(name, menuEntry, address, length, type, min, max);
         this.setReadOnly(readOnly);
     }
@@ -35,8 +35,8 @@ public class DataField {
     @Override
     public String toString() {
         return this.getName() + " (M: " + this.getMenuEntry()
-                + ", A: " + Tools.getByteArrayAsHexString(this.getAddress(), true)
-                + ", L: " + Tools.getByteArrayAsHexString(this.getLength(), true)
+                + ", A: " + Tools.intToHexString(this.getAddress())
+                + ", L: " + Tools.intToHexString(this.getLength())
                 + ", T: " + this.getType().toString() + ")";
     }
 
@@ -56,19 +56,19 @@ public class DataField {
         this.menuEntry = menuEntry;
     }
 
-    public byte[] getAddress() {
+    public int getAddress() {
         return address;
     }
 
-    public void setAddress(byte[] address) {
+    public void setAddress(int address) {
         this.address = address;
     }
 
-    public byte[] getLength() {
+    public int getLength() {
         return length;
     }
 
-    public void setLength(byte[] length) {
+    public void setLength(int length) {
         this.length = length;
     }
 

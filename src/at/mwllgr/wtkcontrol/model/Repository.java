@@ -100,8 +100,8 @@ public class Repository {
             DataField currentField = new DataField(
                     splitLine[DataFieldOffset.NAME].trim(),
                     splitLine[DataFieldOffset.MENU].trim(),
-                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.ADDRESS].trim()),
-                    Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH].trim()),
+                    Tools.hexStringToInt(splitLine[DataFieldOffset.ADDRESS].trim()),
+                    Tools.hexStringToInt(splitLine[DataFieldOffset.LENGTH].trim()),
                     DataFieldType.fromString(splitLine[DataFieldOffset.TYPE].trim()),
                     Double.parseDouble(splitLine[DataFieldOffset.MIN].trim()),
                     Double.parseDouble(splitLine[DataFieldOffset.MAX].trim()),
@@ -122,21 +122,19 @@ public class Repository {
         for (String key : fields.keySet()) {
             DataField field = fields.get(key);
 
-            byte[] byteValue = new byte[field.length[0]];
-
-            int addrInt = new BigInteger(field.address).intValue();
+            byte[] byteValue = new byte[field.getLength()];
             int bytesToReadInt = new BigInteger(bytesToRead).intValue();
 
-            for(int i = 0; i < field.length[0]; i++) {
-                if(addrInt < bytesToReadInt - 2) {
-                    int dleFirst = responseBytes[addrInt + i];
-                    int dleSecond = responseBytes[addrInt + i + 1];
+            for(int i = 0; i < field.length; i++) {
+                if(field.getAddress() < bytesToReadInt - 2) {
+                    int dleFirst = responseBytes[field.getAddress() + i];
+                    int dleSecond = responseBytes[field.getAddress() + i + 1];
                     if(dleFirst == 0x10 && dleSecond == 0x10) {
                         offset++;
                     }
                 }
 
-                byteValue[i] = responseBytes[addrInt + i + offset];
+                byteValue[i] = responseBytes[field.getAddress() + i + offset];
             }
 
             System.out.println(key + "-V\t\t" + Tools.getByteArrayAsHexString(byteValue, true));

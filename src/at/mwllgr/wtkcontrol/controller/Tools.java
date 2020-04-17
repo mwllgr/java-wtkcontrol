@@ -62,4 +62,12 @@ public final class Tools {
 
         return BigInteger.valueOf(crc).toByteArray();
     }
+
+    public static int hexStringToInt(String hex) {
+        return Integer.parseInt(hex, 16);
+    }
+
+    public static String intToHexString(int hex) {
+        return String.format("%02X", hex);
+    }
 }
