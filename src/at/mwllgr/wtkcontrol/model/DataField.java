@@ -9,8 +9,8 @@ public class DataField {
     int address; // Offset
     int length;
     DataFieldType type;
-    double min = 0.00;
-    double max = 0.00;
+    float min = 0.00f;
+    double max = 0.00f;
     boolean readOnly = false;
 
     public DataField(String name, String menuEntry, int address, int length, DataFieldType type) {
@@ -21,13 +21,13 @@ public class DataField {
         this.setType(type);
     }
 
-    public DataField(String name, String menuEntry, int address, int length, DataFieldType type, double min, double max) {
+    public DataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max) {
         this(name, menuEntry, address, length, type);
         this.setMin(min);
         this.setMax(max);
     }
 
-    public DataField(String name, String menuEntry, int address, int length, DataFieldType type, double min, double max, boolean readOnly) {
+    public DataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max, boolean readOnly) {
         this(name, menuEntry, address, length, type, min, max);
         this.setReadOnly(readOnly);
     }
@@ -84,7 +84,7 @@ public class DataField {
         return min;
     }
 
-    public void setMin(double min) {
+    public void setMin(float min) {
         this.min = min;
     }
 
@@ -92,7 +92,7 @@ public class DataField {
         return max;
     }
 
-    public void setMax(double max) {
+    public void setMax(float max) {
         this.max = max;
     }
 

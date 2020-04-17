@@ -99,8 +99,8 @@ public class Repository {
                     Tools.hexStringToInt(splitLine[DataFieldOffset.ADDRESS].trim()),
                     Tools.hexStringToInt(splitLine[DataFieldOffset.LENGTH].trim()),
                     DataFieldType.fromString(splitLine[DataFieldOffset.TYPE].trim()),
-                    Double.parseDouble(splitLine[DataFieldOffset.MIN].trim()),
-                    Double.parseDouble(splitLine[DataFieldOffset.MAX].trim()),
+                    Float.parseFloat(splitLine[DataFieldOffset.MIN].trim()),
+                    Float.parseFloat(splitLine[DataFieldOffset.MAX].trim()),
                     Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
             );
 
