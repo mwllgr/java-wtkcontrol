@@ -29,13 +29,8 @@ public class Repository {
     }
 
     HashMap<String, DataField> fields;
-    private File addressList;
-    int dataFieldCounter = 0;
+    boolean parsedMaxBytesToRead = false;
     byte[] bytesToRead;
-
-    public File getAddressList() {
-        return addressList;
-    }
 
     public SerialController getSerialComm() {
         return serialComm;
@@ -55,8 +50,8 @@ public class Repository {
             fields = new LinkedHashMap<>();
         }
         if(addressList.exists() && addressList.canRead()) {
-            this.addressList = addressList;
             try {
+                // All checks passed, only failure might be an Exception now
                 readFromCsv(addressList);
                 return true;
             } catch (IOException e) {
@@ -89,10 +84,11 @@ public class Repository {
     private void addDataFieldToHashMap(String line) {
         String[] splitLine = line.split(CSV_SEPARATOR);
 
-        if(dataFieldCounter == 0) {
+        if(!parsedMaxBytesToRead) {
             // First line contains the (max) bytes to read
             bytesToRead = Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH]);
             System.out.println("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead, true));
+            parsedMaxBytesToRead = true;
         }
         else
         {
@@ -112,21 +108,29 @@ public class Repository {
             // Add to HashMap
             fields.put(currentField.getName(), currentField);
         }
-
-        dataFieldCounter++;
     }
 
+    /**
+     * Parses every field in our HashMap.
+     * @param responseBytes Bytes to parse
+     */
     public void parseResponse(byte[] responseBytes) {
+        int bytesToReadInt = new BigInteger(bytesToRead).intValue();
+
+        // Offset for byte stuffing
         int offset = 0;
 
+        // Go through all elements
         for (String key : fields.keySet()) {
             DataField field = fields.get(key);
 
             byte[] byteValue = new byte[field.getLength()];
-            int bytesToReadInt = new BigInteger(bytesToRead).intValue();
 
             for(int i = 0; i < field.length; i++) {
                 if(field.getAddress() < bytesToReadInt - 2) {
+                    // Check for byte stuffing
+                    // 0x10 0x10 -> skip one 0x10
+                    // See https://web.cs.wpi.edu/~rek/Undergrad_Nets/C04/BitByteStuffing.pdf, slide page 8
                     int dleFirst = responseBytes[field.getAddress() + i];
                     int dleSecond = responseBytes[field.getAddress() + i + 1];
                     if(dleFirst == 0x10 && dleSecond == 0x10) {
@@ -137,7 +141,9 @@ public class Repository {
                 byteValue[i] = responseBytes[field.getAddress() + i + offset];
             }
 
-            System.out.println(key + "-V\t\t" + Tools.getByteArrayAsHexString(byteValue, true));
+            System.out.println(
+                    String.format("%-25s= %s", key, Tools.getByteArrayAsHexString(byteValue, true))
+            );
         }
     }
 }
