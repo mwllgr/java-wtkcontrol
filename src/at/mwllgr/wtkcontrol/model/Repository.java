@@ -6,12 +6,14 @@ import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.types.*;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.stream.Stream;
 
 public class Repository {
@@ -21,7 +23,10 @@ public class Repository {
     // Singleton
     private static Repository instance;
 
-    private Repository() { }
+    private Repository() {
+        this.fields = new LinkedList<>();
+    }
+
     public static Repository getInstance () {
         if (Repository.instance == null) {
             Repository.instance = new Repository ();
@@ -29,7 +34,7 @@ public class Repository {
         return Repository.instance;
     }
 
-    HashMap<String, DataField> fields;
+    LinkedList<DataField> fields;
     boolean parsedMaxBytesToRead = false;
     byte[] bytesToRead;
 
@@ -47,9 +52,6 @@ public class Repository {
      * @return false on error
      */
     public boolean setAddressList(File addressList) {
-        if(fields == null) {
-            fields = new LinkedHashMap<>();
-        }
         if(addressList.exists() && addressList.canRead()) {
             try {
                 // All checks passed, only failure might be an Exception now
@@ -107,7 +109,7 @@ public class Repository {
 
             System.out.println("Add field from CSV: " + currentField.toString());
             // Add to HashMap
-            fields.put(currentField.getName(), currentField);
+            fields.add(currentField);
         }
     }
 
@@ -123,9 +125,7 @@ public class Repository {
         int offset = 0;
 
         // Go through all elements
-        for (String key : fields.keySet()) {
-            DataField field = fields.get(key);
-
+        for (DataField field : fields) {
             byte[] byteValue = new byte[field.getLength()];
 
             for(int i = 0; i < field.length; i++) {
@@ -148,27 +148,28 @@ public class Repository {
                 byteValue[i] = responseBytes[field.getAddress() + i + offset];
             }
 
+            int fieldIndex = fields.indexOf(field);
             DataField newField = null;
             switch(field.getType()) {
                 case DATE:
                     newField = new DateDataField(field);
                     ((DateDataField) newField).setBytes(byteValue);
-                    fields.replace(field.getName(), newField);
+                    fields.set(fieldIndex, newField);
                     break;
                 case TIME:
                     newField = new TimeDataField(field);
                     ((TimeDataField) newField).setBytes(byteValue);
-                    fields.replace(field.getName(), newField);
+                    fields.set(fieldIndex, newField);
                     break;
                 case FLOAT:
                     newField = new FloatDataField(field);
                     ((FloatDataField) newField).setBytes(byteValue);
-                    fields.replace(field.getName(), newField);
+                    fields.set(fieldIndex, newField);
                     break;
                 case BINARY:
                     newField = new BinaryDataField(field);
                     ((BinaryDataField) newField).setBytes(byteValue);
-                    fields.replace(field.getName(), newField);
+                    fields.set(fieldIndex, newField);
                     break;
                 case UNSIGNED_CHAR:
                     if(field.getMin() == 0 && field.getMax() == 1) {
@@ -180,18 +181,22 @@ public class Repository {
                         newField = new CharDataField(field);
                         ((CharDataField) newField).setBytes(byteValue);
                     }
-                    fields.replace(field.getName(), newField);
+                    fields.set(fieldIndex, newField);
                     break;
                 case UNSIGNED_SHORT:
                     newField = new ShortDataField(field);
                     ((ShortDataField) newField).setBytes(byteValue);
-                    fields.replace(field.getName(), newField);
+                    fields.set(fieldIndex, newField);
                     break;
             }
 
             System.out.println(
-                    String.format("%-25s= %s", key, newField.toString())
+                    String.format("%-25s= %s", field.getName(), newField.toString())
             );
         }
+    }
+
+    public LinkedList<DataField> getFields() {
+        return this.fields;
     }
 }

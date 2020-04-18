@@ -27,13 +27,13 @@
       <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="370.0" />
    </columnConstraints>
    <children>
-      <TableView maxWidth="1.7976931348623157E308" prefHeight="178.0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
+      <TableView fx:id="tvData" maxWidth="1.7976931348623157E308" prefHeight="178.0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="8">
           <placeholder>
               <Label text="Keine Werte eingelesen" />
           </placeholder>
         <columns>
-          <TableColumn editable="false" prefWidth="75.0" text="Name" />
-          <TableColumn editable="false" prefWidth="75.0" text="Wert" />
+          <TableColumn fx:id="colName" editable="false" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="colValue" editable="false" prefWidth="75.0" text="Wert" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

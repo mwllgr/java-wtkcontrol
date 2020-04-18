@@ -1,21 +1,31 @@
 package at.mwllgr.wtkcontrol.controller;
 
 import at.mwllgr.wtkcontrol.globals.CommandMode;
+import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.Map;
 
 public class MainController {
     @FXML
     private ComboBox<String> cmbPorts;
+    @FXML
+    private TableView<DataField> tvData;
+    @FXML
+    private TableColumn<DataField, String> colName, colValue;
+    ObservableList<DataField> items;
+
     @FXML
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnImport, btnExport;
     final FileChooser fileChooser = new FileChooser();
@@ -25,6 +35,12 @@ public class MainController {
     @FXML
     public void initialize() {
         setCmbPorts();
+        // TODO: FIX TableView
+//        colName.setCellValueFactory(field -> new SimpleStringProperty("name"));
+//        colValue.setCellValueFactory(field -> new SimpleStringProperty("stringValue"));
+//
+//        items = FXCollections.observableList(repository.getFields());
+//        tvData.setItems(items);
     }
 
     /**
