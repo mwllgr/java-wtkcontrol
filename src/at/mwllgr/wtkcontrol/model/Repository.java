@@ -4,7 +4,7 @@ import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
-import at.mwllgr.wtkcontrol.model.types.DateDataField;
+import at.mwllgr.wtkcontrol.model.types.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,12 +105,6 @@ public class Repository {
                     Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
             );
 
-            switch(currentField.getType()) {
-                case DATE:
-                    currentField = new DateDataField(currentField);
-
-            }
-
             System.out.println("Add field from CSV: " + currentField.toString());
             // Add to HashMap
             fields.put(currentField.getName(), currentField);
@@ -122,6 +116,7 @@ public class Repository {
      * @param responseBytes Bytes to parse
      */
     public void parseResponse(byte[] responseBytes) {
+        System.out.println("Parsing response...");
         int bytesToReadInt = new BigInteger(bytesToRead).intValue();
 
         // Offset for byte stuffing
@@ -142,14 +137,60 @@ public class Repository {
                     int dleSecond = responseBytes[field.getAddress() + i + 1];
                     if(dleFirst == 0x10 && dleSecond == 0x10) {
                         offset++;
+                        System.out.println("Skipped 0x10 - offset set to " + offset + "!");
                     }
+                }
+                else
+                {
+                    System.out.println("Byte stuff check skipped.");
                 }
 
                 byteValue[i] = responseBytes[field.getAddress() + i + offset];
             }
 
+            DataField newField = null;
+            switch(field.getType()) {
+                case DATE:
+                    newField = new DateDataField(field);
+                    ((DateDataField) newField).setBytes(byteValue);
+                    fields.replace(field.getName(), newField);
+                    break;
+                case TIME:
+                    newField = new TimeDataField(field);
+                    ((TimeDataField) newField).setBytes(byteValue);
+                    fields.replace(field.getName(), newField);
+                    break;
+                case FLOAT:
+                    newField = new FloatDataField(field);
+                    ((FloatDataField) newField).setBytes(byteValue);
+                    fields.replace(field.getName(), newField);
+                    break;
+                case BINARY:
+                    newField = new BinaryDataField(field);
+                    ((BinaryDataField) newField).setBytes(byteValue);
+                    fields.replace(field.getName(), newField);
+                    break;
+                case UNSIGNED_CHAR:
+                    if(field.getMin() == 0 && field.getMax() == 1) {
+                        newField = new BooleanDataField(field);
+                        ((BooleanDataField) newField).setBytes(byteValue);
+                    }
+                    else
+                    {
+                        newField = new CharDataField(field);
+                        ((CharDataField) newField).setBytes(byteValue);
+                    }
+                    fields.replace(field.getName(), newField);
+                    break;
+                case UNSIGNED_SHORT:
+                    newField = new ShortDataField(field);
+                    ((ShortDataField) newField).setBytes(byteValue);
+                    fields.replace(field.getName(), newField);
+                    break;
+            }
+
             System.out.println(
-                    String.format("%-25s= %s", key, Tools.getByteArrayAsHexString(byteValue, true))
+                    String.format("%-25s= %s", key, newField.toString())
             );
         }
     }
