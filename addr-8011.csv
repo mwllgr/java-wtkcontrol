@@ -17,7 +17,7 @@ Uhrzeit,3.00,34,3,t,0,0,1
 Datum,3.01,37,3,d,0,0,1
 Messbeginn-Zeit,3.02,3A,3,t,0,0,1
 Messbeginn-Datum,3.03,3D,3,d,0,0,1
-Hz-Messergebnis,3.04,41,4,f,0,0,1
+Hz-Messergebnis,3.04,40,4,f,0,0,1
 Ww-Messergebnis,3.05,44,4,f,0,0,1
 Mess-Reset,3.06,48,1,c,0,1,0
 KomprBeginn-Zeit,3.07,49,3,t,0,0,1
