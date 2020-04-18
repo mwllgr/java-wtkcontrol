@@ -7,11 +7,13 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class FloatDataField extends DataField {
-    private static int LENGTH = 4;
+    private static final int LENGTH = 4;
     private float value;
 
-    public FloatDataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max, boolean readOnly) {
-        super(name, menuEntry, address, length, type, min, max, readOnly);
+    public FloatDataField(DataField dataField) {
+        super(dataField.getName(), dataField.getMenuEntry(), dataField.getAddress(),
+                dataField.getLength(), dataField.getType(), dataField.getMin(),
+                dataField.getMax(), dataField.isReadOnly());
     }
 
     public float getValue() {
@@ -39,6 +41,6 @@ public class FloatDataField extends DataField {
 
     @Override
     public String toString() {
-        return Float.toString(this.getValue());
+        return String.format("%.2f", this.getValue());
     }
 }

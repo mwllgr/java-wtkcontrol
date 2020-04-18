@@ -28,7 +28,7 @@ public class DateDataField extends DataField {
 
     public LocalDate setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
-            this.setValue(LocalDate.of(bytes[0], bytes[1], bytes[2]));
+            this.setValue(LocalDate.of(bytes[2], bytes[1], bytes[0]));
             return this.getValue();
         }
 

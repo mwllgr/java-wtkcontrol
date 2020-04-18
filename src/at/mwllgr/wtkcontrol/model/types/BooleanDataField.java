@@ -4,7 +4,7 @@ import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
 
 public class BooleanDataField extends DataField {
-    private static int LENGTH = 1;
+    private static final int LENGTH = 1;
     private boolean value;
 
     public BooleanDataField(DataField dataField) {
@@ -49,6 +49,6 @@ public class BooleanDataField extends DataField {
 
     @Override
     public String toString() {
-        return this.getValue() ? "1" : "0";
+        return this.getValue() ? "1 (ja)" : "0 (nein)";
     }
 }

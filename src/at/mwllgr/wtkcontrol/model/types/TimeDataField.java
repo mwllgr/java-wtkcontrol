@@ -1,30 +1,34 @@
 package at.mwllgr.wtkcontrol.model.types;
 
-import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.model.DataField;
+import at.mwllgr.wtkcontrol.model.TimeWith24;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class TimeDataField extends DataField {
-    private static int LENGTH = 3;
-    private LocalTime value;
+    private static final int LENGTH = 3;
+    private TimeWith24 value;
 
-    public TimeDataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max, boolean readOnly) {
-        super(name, menuEntry, address, length, type, min, max, readOnly);
+    public TimeDataField(DataField dataField) {
+        super(dataField.getName(), dataField.getMenuEntry(), dataField.getAddress(),
+                dataField.getLength(), dataField.getType(), dataField.getMin(),
+                dataField.getMax(), dataField.isReadOnly());
     }
 
-    public LocalTime getValue() {
+    public TimeWith24 getValue() {
         return value;
     }
 
-    public void setValue(LocalTime value) {
+    public void setValue(TimeWith24 value) {
         this.value = value;
     }
 
-    public LocalTime setBytes(byte[] bytes) {
+    public TimeWith24 setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
-            this.setValue(LocalTime.of(bytes[2], bytes[1], bytes[0]));
+            TimeWith24 time = new TimeWith24(bytes[2], bytes[1], bytes[0]);
+            this.setValue(time);
             return this.getValue();
         }
 
@@ -33,15 +37,14 @@ public class TimeDataField extends DataField {
 
     public byte[] getBytes() {
         return new byte[] {
-                Integer.valueOf(this.getValue().getSecond()).byteValue(),
-                Integer.valueOf(this.getValue().getMinute()).byteValue(),
-                Integer.valueOf(this.getValue().getHour()).byteValue()
+                Integer.valueOf(this.getValue().getSeconds()).byteValue(),
+                Integer.valueOf(this.getValue().getMinutes()).byteValue(),
+                Integer.valueOf(this.getValue().getHours()).byteValue()
         };
     }
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return this.getValue().format(formatter);
+        return this.getValue().toString();
     }
 }

@@ -3,6 +3,7 @@ package at.mwllgr.wtkcontrol.model.types;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
 
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.time.LocalDate;
 
@@ -10,8 +11,10 @@ public class CharDataField extends DataField {
     private static final int LENGTH = 1;
     private int value;
 
-    public CharDataField(String name, String menuEntry, int address, int length, DataFieldType type, float min, float max, boolean readOnly) {
-        super(name, menuEntry, address, length, type, min, max, readOnly);
+    public CharDataField(DataField dataField) {
+        super(dataField.getName(), dataField.getMenuEntry(), dataField.getAddress(),
+                dataField.getLength(), dataField.getType(), dataField.getMin(),
+                dataField.getMax(), dataField.isReadOnly());
     }
 
     public int getValue() {
@@ -22,10 +25,10 @@ public class CharDataField extends DataField {
         this.value = value;
     }
 
-    public LocalDate setBytes(byte[] bytes) {
+    public int setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
-            ByteBuffer wrapped = ByteBuffer.wrap(bytes);
-            this.setValue(wrapped.getInt());
+            this.setValue(new BigInteger(bytes).intValue());
+            return this.getValue();
         }
 
         throw new IllegalArgumentException("Invalid byte length for data type!");
