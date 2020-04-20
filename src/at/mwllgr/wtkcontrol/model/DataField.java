@@ -2,9 +2,11 @@ package at.mwllgr.wtkcontrol.model;
 
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import javafx.beans.property.SimpleStringProperty;
 
 public class DataField {
-    String name;
+    private final SimpleStringProperty name;
+    private SimpleStringProperty toString;
     String menuEntry;
     int address; // Offset
     int length;
@@ -14,7 +16,7 @@ public class DataField {
     boolean readOnly = false;
 
     public DataField(String name, String menuEntry, int address, int length, DataFieldType type) {
-        this.setName(name);
+        this.name = new SimpleStringProperty(name);
         this.setMenuEntry(menuEntry);
         this.setAddress(address);
         this.setLength(length);
@@ -41,11 +43,20 @@ public class DataField {
     }
 
     public String getName() {
+        return name.get();
+    }
+
+    public SimpleStringProperty nameProperty() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getToString() {
+        return toString.get();
+    }
+
+    public SimpleStringProperty toStringProperty() {
+        this.toString = new SimpleStringProperty(this.toString());
+        return toString;
     }
 
     public String getMenuEntry() {

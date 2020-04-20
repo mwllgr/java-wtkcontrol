@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -35,12 +36,12 @@ public class MainController {
     @FXML
     public void initialize() {
         setCmbPorts();
-        // TODO: FIX TableView
-//        colName.setCellValueFactory(field -> new SimpleStringProperty("name"));
-//        colValue.setCellValueFactory(field -> new SimpleStringProperty("stringValue"));
-//
-//        items = FXCollections.observableList(repository.getFields());
-//        tvData.setItems(items);
+
+        colName.setCellValueFactory(new PropertyValueFactory<DataField, String>("name"));
+        colValue.setCellValueFactory(new PropertyValueFactory<DataField, String>("toString"));
+
+        items = FXCollections.observableList(repository.getFields());
+        tvData.setItems(items);
     }
 
     /**
