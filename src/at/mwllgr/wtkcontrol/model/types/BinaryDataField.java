@@ -2,9 +2,7 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.model.DataField;
 
-import java.nio.ByteBuffer;
-
-public class BinaryDataField extends DataField {
+public class BinaryDataField extends DataField implements GenericDataField {
     private static final int LENGTH = 1;
     private int value;
 
@@ -28,13 +26,20 @@ public class BinaryDataField extends DataField {
         };
     }
 
-    public int setBytes(byte[] bytes) {
+    public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
             this.setValue(bytes[0]);
-            return this.getValue();
+        }
+        else
+        {
+            throw new IllegalArgumentException("Invalid byte length for data type!");
         }
 
-        throw new IllegalArgumentException("Invalid byte length for data type!");
+    }
+
+    @Override
+    public boolean setValueFromString(String time) {
+        return false;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package at.mwllgr.wtkcontrol.model.types;
 
-import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
 
-public class BooleanDataField extends DataField {
+public class BooleanDataField extends DataField implements GenericDataField {
     private static final int LENGTH = 1;
     private boolean value;
 
@@ -31,24 +30,27 @@ public class BooleanDataField extends DataField {
         return new byte[]{value};
     }
 
-    public boolean setBytes(byte[] bytes) {
+    public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
             if (bytes[0] == 0) {
                 this.setValue(false);
             } else if (bytes[0] == 1) {
                 this.setValue(false);
-            } else {
-                return false;
             }
-
-            return true;
         }
+        else
+        {
+            throw new IllegalArgumentException("Invalid byte length for data type!");
+        }
+    }
 
-        throw new IllegalArgumentException("Invalid byte length for data type!");
+    @Override
+    public boolean setValueFromString(String time) {
+        return false;
     }
 
     @Override
     public String toString() {
-        return this.getValue() ? "1 (ja)" : "0 (nein)";
+        return this.getValue() ? "1" : "0";
     }
 }

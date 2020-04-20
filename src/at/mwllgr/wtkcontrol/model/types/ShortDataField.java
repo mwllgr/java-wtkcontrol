@@ -1,13 +1,10 @@
 package at.mwllgr.wtkcontrol.model.types;
 
-import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.time.LocalDate;
 
-public class ShortDataField extends DataField {
+public class ShortDataField extends DataField implements GenericDataField {
     private static final int LENGTH = 2;
     private int value;
 
@@ -25,13 +22,19 @@ public class ShortDataField extends DataField {
         this.value = value;
     }
 
-    public int setBytes(byte[] bytes) {
+    public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
             this.setValue(new BigInteger(bytes).intValue());
-            return this.getValue();
         }
+        else
+        {
+            throw new IllegalArgumentException("Invalid byte length for data type!");
+        }
+    }
 
-        throw new IllegalArgumentException("Invalid byte length for data type!");
+    @Override
+    public boolean setValueFromString(String time) {
+        return false;
     }
 
     public byte[] getBytes() {

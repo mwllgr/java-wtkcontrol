@@ -6,7 +6,7 @@ import at.mwllgr.wtkcontrol.model.DataField;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class FloatDataField extends DataField {
+public class FloatDataField extends DataField implements GenericDataField {
     private static final int LENGTH = 4;
     private float value;
 
@@ -24,19 +24,24 @@ public class FloatDataField extends DataField {
         this.value = value;
     }
 
-    public float setBytes(byte[] bytes) {
+    public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
             float converted = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getFloat();
             this.setValue(converted);
-            return converted;
         }
-
-        throw new IllegalArgumentException("Invalid byte length for data type!");
+        else
+        {
+            throw new IllegalArgumentException("Invalid byte length for data type!");
+        }
     }
 
-    public float getBytes() {
-        byte[] bytes = { };
-        return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+    @Override
+    public boolean setValueFromString(String time) {
+        return false;
+    }
+
+    public byte[] getBytes() {
+        return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(this.getValue()).array();
     }
 
     @Override
