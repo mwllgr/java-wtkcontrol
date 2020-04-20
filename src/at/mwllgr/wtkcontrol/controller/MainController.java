@@ -111,7 +111,7 @@ public class MainController {
         boolean success = false;
         if(list != null) success = repository.setAddressList(list);
 
-        if(!success) {
+        if(!success && list != null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Dateifehler");
 
