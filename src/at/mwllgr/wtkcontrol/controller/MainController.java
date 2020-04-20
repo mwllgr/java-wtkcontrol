@@ -4,8 +4,6 @@ import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,7 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.util.Map;
+import java.util.Optional;
 
 public class MainController {
     @FXML
@@ -36,6 +34,17 @@ public class MainController {
     @FXML
     public void initialize() {
         setCmbPorts();
+
+        tvData.setRowFactory(tableView -> {
+            TableRow<DataField> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    DataField rowData = row.getItem();
+                    this.editField(rowData);
+                }
+            });
+            return row;
+        });
 
         colName.setCellValueFactory(new PropertyValueFactory<DataField, String>("name"));
         colValue.setCellValueFactory(new PropertyValueFactory<DataField, String>("toString"));
@@ -129,5 +138,18 @@ public class MainController {
     @FXML
     private void fullRead(ActionEvent event) {
         repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repository.getBytesToRead());
+    }
+
+    private void editField(DataField field) {
+        TextInputDialog dialog = new TextInputDialog(field.toString());
+        dialog.setTitle("Wert bearbeiten");
+        dialog.setHeaderText("Wert bearbeiten");
+        dialog.setContentText(field.getName());
+
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent()) {
+            String valueCopy = field.toString();
+
+        }
     }
 }

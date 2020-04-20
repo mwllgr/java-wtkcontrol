@@ -6,7 +6,7 @@ import at.mwllgr.wtkcontrol.model.DataField;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class FloatDataField extends DataField implements GenericDataField {
+public class FloatDataField extends DataField {
     private static final int LENGTH = 4;
     private float value;
 
@@ -35,7 +35,6 @@ public class FloatDataField extends DataField implements GenericDataField {
         }
     }
 
-    @Override
     public boolean setValueFromString(String time) {
         return false;
     }

@@ -4,7 +4,7 @@ import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.math.BigInteger;
 
-public class CharDataField extends DataField implements GenericDataField {
+public class CharDataField extends DataField {
     private static final int LENGTH = 1;
     private int value;
 
@@ -32,7 +32,6 @@ public class CharDataField extends DataField implements GenericDataField {
         }
     }
 
-    @Override
     public boolean setValueFromString(String time) {
         return false;
     }

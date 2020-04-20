@@ -2,7 +2,7 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.model.DataField;
 
-public class BooleanDataField extends DataField implements GenericDataField {
+public class BooleanDataField extends DataField {
     private static final int LENGTH = 1;
     private boolean value;
 
@@ -44,7 +44,6 @@ public class BooleanDataField extends DataField implements GenericDataField {
         }
     }
 
-    @Override
     public boolean setValueFromString(String time) {
         return false;
     }

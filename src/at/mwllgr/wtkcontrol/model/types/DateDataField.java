@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DateDataField extends DataField implements GenericDataField {
+public class DateDataField extends DataField {
     private static final int LENGTH = 3;
     private LocalDate value;
 
@@ -36,7 +36,6 @@ public class DateDataField extends DataField implements GenericDataField {
         }
     }
 
-    @Override
     public boolean setValueFromString(String time) {
         return false;
     }
