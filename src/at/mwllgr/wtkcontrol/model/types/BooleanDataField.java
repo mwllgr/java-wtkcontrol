@@ -44,7 +44,13 @@ public class BooleanDataField extends DataField {
         }
     }
 
-    public boolean setValueFromString(String time) {
+    public boolean setValueFromString(String bool) {
+        if(bool.equals("0") || bool.equals("1"))
+        {
+            this.setValue(bool.equals("1"));
+            return true;
+        }
+
         return false;
     }
 

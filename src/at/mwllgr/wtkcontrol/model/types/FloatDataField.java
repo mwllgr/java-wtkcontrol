@@ -35,7 +35,19 @@ public class FloatDataField extends DataField {
         }
     }
 
-    public boolean setValueFromString(String time) {
+    public boolean setValueFromString(String floatString) {
+        float newValue;
+        try {
+            newValue = Float.parseFloat(floatString);
+        }
+        catch (NumberFormatException ex) {
+            return false;
+        }
+
+        if(newValue >= this.getMin() && newValue <= this.getMax()) {
+            this.setValue(newValue);
+            return true;
+        }
         return false;
     }
 
