@@ -32,7 +32,20 @@ public class CharDataField extends DataField {
         }
     }
 
-    public boolean setValueFromString(String time) {
+    public boolean setValueFromString(String charStr) {
+        int newValue;
+        try {
+            newValue = Integer.parseInt(charStr);
+        }
+        catch (NumberFormatException ex) {
+            return false;
+        }
+
+        if(newValue >= this.getMin() && newValue <= this.getMax()) {
+            this.setValue(newValue);
+            return true;
+        }
+
         return false;
     }
 
