@@ -114,4 +114,8 @@ public class DataField {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
+
+    // The following methods should be overridden in the subclasses
+    public boolean setValueFromString(String time) { return false; }
+    public byte[] getBytes() { return null; }
 }

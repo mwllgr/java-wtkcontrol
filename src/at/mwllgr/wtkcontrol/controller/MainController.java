@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.util.Optional;
 
 public class MainController {
@@ -151,7 +152,21 @@ public class MainController {
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()) {
             String valueCopy = field.toString();
+            this.repository.setValueCopy(valueCopy);
+            if(!field.setValueFromString(result.get())) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Validierungsfehler");
 
+                alert.setHeaderText(null);
+                alert.setContentText("Die eingegebenen Daten sind für dieses Feld ungültig.");
+
+                alert.showAndWait();
+            }
+            else
+            {
+                byte[] writeAddr = BigInteger.valueOf(field.getAddress()).toByteArray();
+                repository.getSerialComm().sendCommand(CommandMode.WRITE_MEMORY, writeAddr, field.getBytes());
+            }
         }
     }
 }

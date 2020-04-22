@@ -13,14 +13,13 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
 public class Repository {
     static final String CSV_SEPARATOR = ",";
     private final SerialController serialComm = SerialController.getInstance();
+    private String valueCopy = "";
 
     // Singleton
     private static Repository instance;
@@ -47,6 +46,14 @@ public class Repository {
 
     public byte[] getBytesToRead() {
         return bytesToRead;
+    }
+
+    public String getValueCopy() {
+        return valueCopy;
+    }
+
+    public void setValueCopy(String valueCopy) {
+        this.valueCopy = valueCopy;
     }
 
     /**
