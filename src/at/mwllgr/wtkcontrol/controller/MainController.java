@@ -144,6 +144,17 @@ public class MainController {
     }
 
     private void editField(DataField field) {
+        if(field.isReadOnly()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Feld nur lesbar");
+
+            alert.setHeaderText(null);
+            alert.setContentText("Das ausgewählte Feld kann nicht bearbeitet werden.");
+
+            alert.showAndWait();
+            return;
+        }
+
         TextInputDialog dialog = new TextInputDialog(field.toString());
         dialog.setTitle("Wert bearbeiten");
         dialog.setHeaderText("Wert bearbeiten");
