@@ -32,7 +32,20 @@ public class ShortDataField extends DataField {
         }
     }
 
-    public boolean setValueFromString(String time) {
+    public boolean setValueFromString(String newValueStr) {
+        int newValue = 0;
+        try {
+            newValue = Integer.parseInt(newValueStr);
+        }
+        catch (NumberFormatException ex) {
+            return false;
+        }
+
+        if(newValue >= this.getMin() && newValue <= this.getMax()) {
+            this.setValue(newValue);
+            return true;
+        }
+
         return false;
     }
 

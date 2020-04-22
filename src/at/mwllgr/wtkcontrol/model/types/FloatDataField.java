@@ -48,6 +48,7 @@ public class FloatDataField extends DataField {
             this.setValue(newValue);
             return true;
         }
+
         return false;
     }
 
