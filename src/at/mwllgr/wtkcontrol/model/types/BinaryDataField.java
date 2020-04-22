@@ -3,6 +3,7 @@ package at.mwllgr.wtkcontrol.model.types;
 import at.mwllgr.wtkcontrol.model.DataField;
 
 public class BinaryDataField extends DataField {
+    private static final int BINARY_RADIX = 2;
     private static final int LENGTH = 1;
     private int value;
 
@@ -37,8 +38,16 @@ public class BinaryDataField extends DataField {
 
     }
 
-    public boolean setValueFromString(String time) {
-        return false;
+    public boolean setValueFromString(String binaryString) {
+        if(binaryString.length() <= 8) {
+            int newValue = Integer.parseInt(binaryString, BINARY_RADIX);
+            this.setValue(newValue);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override
