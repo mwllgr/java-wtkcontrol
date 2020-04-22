@@ -95,16 +95,6 @@ Ww-Zeit-Aus,2.02,E7,3,t,0,0,0
 Ww-Temp-Soll,2.04,EA,4,f,20.0,55.0,0
 Ww-Becken-Temp-Soll,2.05,EE,4,f,20.0,35.0,0
 Ww-Hysterese,2.06,F2,4,f,5.0,10.0,0
-Hz-Begrenzung,1.12,D6,4,f,10.0,50.0,0
-Hz-St2-Begrenzung,1.13,DA,4,f,10.0,60.0,0
-Hz-Hysterese,1.14,DE,4,f,1.0,3.0,0
-Hz-PumpenNachl,1.15,E2,1,c,0,20,0
-Ww-Abschaltung,2.00,E3,1,c,0,1,0
-Ww-Zeit-Ein,2.01,E4,3,t,0,0,0
-Ww-Zeit-Aus,2.02,E7,3,t,0,0,0
-Ww-Temp-Soll,2.04,EA,4,f,20.0,55.0,0
-Ww-Becken-Temp-Soll,2.05,EE,4,f,20.0,35.0,0
-Ww-Hysterese,2.06,F2,4,f,5.0,10.0,0
 Ww-Becken-Hysterese,2.07,F6,4,f,0.5,5.0,0
 Unterdr-Warnung-Eingang,4.11,FA,1,b,0,0,0
 Unterdr-Warnung-Ausgang,4.12,FB,1,b,0,0,0
