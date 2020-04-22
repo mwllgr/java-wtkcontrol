@@ -27,7 +27,9 @@ public class TimeDataField extends DataField {
 
     public boolean setValueFromString(String time) {
         TimeWith24 timeObj = new TimeWith24();
-        return timeObj.fromString(time);
+        boolean success = timeObj.fromString(time);
+        this.setValue(timeObj);
+        return success;
     }
 
     public TimeWith24 setBytes(byte[] bytes) {

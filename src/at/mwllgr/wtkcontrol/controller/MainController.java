@@ -35,7 +35,7 @@ public class MainController {
     public void initialize() {
         setCmbPorts();
 
-        tvData.setRowFactory(tableView -> {
+       tvData.setRowFactory(tableView -> {
             TableRow<DataField> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
@@ -48,9 +48,6 @@ public class MainController {
 
         colName.setCellValueFactory(new PropertyValueFactory<DataField, String>("name"));
         colValue.setCellValueFactory(new PropertyValueFactory<DataField, String>("toString"));
-
-        items = FXCollections.observableList(repository.getFields());
-        tvData.setItems(items);
     }
 
     /**
@@ -128,6 +125,11 @@ public class MainController {
             alert.setContentText("Die ausgewählte Adressdatei konnte nicht gelesen werden.");
 
             alert.showAndWait();
+        }
+        else
+        {
+            items = repository.getFields();
+            tvData.setItems(items);
         }
     }
 

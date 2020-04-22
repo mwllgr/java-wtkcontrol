@@ -5,6 +5,8 @@ import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.types.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.xml.crypto.Data;
 import java.io.File;
@@ -24,7 +26,7 @@ public class Repository {
     private static Repository instance;
 
     private Repository() {
-        this.fields = new LinkedList<>();
+        this.fields = FXCollections.observableList(new LinkedList<DataField>());
     }
 
     public static Repository getInstance () {
@@ -34,7 +36,8 @@ public class Repository {
         return Repository.instance;
     }
 
-    LinkedList<DataField> fields;
+    //LinkedList<DataField> fields;
+    ObservableList<DataField> fields;
     boolean parsedMaxBytesToRead = false;
     byte[] bytesToRead;
 
@@ -196,7 +199,7 @@ public class Repository {
         }
     }
 
-    public LinkedList<DataField> getFields() {
+    public ObservableList<DataField> getFields() {
         return this.fields;
     }
 }
