@@ -23,14 +23,17 @@ public class SerialListener implements SerialPortDataListener {
 
     SerialPort port;
     String hexBuffer;
+    Repository repo;
 
     public SerialListener(SerialPort port) {
         this.port = port;
+        repo = Repository.getInstance();
         System.out.println("SerialListener: Started!");
     }
 
     public void clearBuffer() {
         this.hexBuffer = "";
+        repo.setTxtRaw("");
         System.out.println("Buffer cleared.");
     }
 
@@ -51,6 +54,7 @@ public class SerialListener implements SerialPortDataListener {
 
         port.readBytes(newData, newData.length);
         hexBuffer += Tools.getByteArrayAsHexString(newData, false);
+        repo.setTxtRaw(hexBuffer);
         System.out.print(Tools.getByteArrayAsHexString(newData, false));
 
         Pattern pattern = Pattern.compile(COMPLETE_FRAME_REGEX);
@@ -77,17 +81,17 @@ public class SerialListener implements SerialPortDataListener {
      */
     public void handleCompleteFrame(String crcData, String recvCrc) {
         byte[] responseBytes = Tools.hexStringToByteArray(crcData);
+        repo.setTxtCrcCalc(crcData);
 
         System.out.print("Checking CRC... ");
         if(checkCrc(responseBytes, Tools.hexStringToByteArray(recvCrc))) {
             if (responseBytes[1] == ResponseMode.READ_RESPONSE) {
                 System.out.println(" -> +CRC: OK");
                 System.out.println("Received response: READ_RESPONSE");
-                Repository.getInstance().parseResponse(Arrays.copyOfRange(responseBytes, 2, responseBytes.length));
+                repo.parseResponse(Arrays.copyOfRange(responseBytes, 2, responseBytes.length));
             } else if (responseBytes[1] == ResponseMode.WRITE_RESPONSE) {
                 // Write operation ACK
                 System.out.println("Received response: WRITE_RESPONSE");
-                Repository repo = Repository.getInstance();
                 // Read values again
                 this.clearBuffer();
                 repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repo.getBytesToRead());
@@ -107,11 +111,11 @@ public class SerialListener implements SerialPortDataListener {
      */
     private boolean checkCrc(byte[] responseBytes, byte[] recvCrcBytes) {
         byte[] calcCrcBytes = CRC16.calculate(responseBytes);
-        System.out.print(
-                "CRC-Recv: " + Tools.getByteArrayAsHexString(recvCrcBytes, false)
-                + " - CRC-Calc: " + Tools.getByteArrayAsHexString(calcCrcBytes, false)
-        );
+        String out = "CRC-Recv: " + Tools.getByteArrayAsHexString(recvCrcBytes, false)
+                + " - CRC-Calc: " + Tools.getByteArrayAsHexString(calcCrcBytes, false);
 
+        System.out.println(out);
+        repo.setTxtCrc(out);
         return Arrays.equals(calcCrcBytes, recvCrcBytes);
     }
 }

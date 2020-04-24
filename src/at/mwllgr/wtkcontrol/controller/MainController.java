@@ -27,6 +27,9 @@ public class MainController {
     ObservableList<DataField> items;
 
     @FXML
+    private TextArea txtRaw, txtRead, txtCrcCalc, txtCrc;
+
+    @FXML
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnImport, btnExport;
     final FileChooser fileChooser = new FileChooser();
 
@@ -49,6 +52,11 @@ public class MainController {
 
         colName.setCellValueFactory(new PropertyValueFactory<DataField, String>("name"));
         colValue.setCellValueFactory(new PropertyValueFactory<DataField, String>("toString"));
+
+        txtRaw.textProperty().bind(repository.txtRawProperty());
+        txtRead.textProperty().bind(repository.txtReadProperty());
+        txtCrcCalc.textProperty().bind(repository.txtCrcCalcProperty());
+        txtCrc.textProperty().bind(repository.txtCrcProperty());
     }
 
     /**

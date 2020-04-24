@@ -5,6 +5,8 @@ import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.types.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -21,6 +23,15 @@ public class Repository {
     private final SerialController serialComm = SerialController.getInstance();
     private DataField newValue;
 
+    private final StringProperty txtRaw = new SimpleStringProperty();
+    private final StringProperty txtRead = new SimpleStringProperty();
+    private final StringProperty txtCrcCalc = new SimpleStringProperty();
+    private final StringProperty txtCrc = new SimpleStringProperty();
+
+    ObservableList<DataField> fields;
+    boolean parsedMaxBytesToRead = false;
+    byte[] bytesToRead;
+
     // Singleton
     private static Repository instance;
 
@@ -34,11 +45,6 @@ public class Repository {
         }
         return Repository.instance;
     }
-
-    //LinkedList<DataField> fields;
-    ObservableList<DataField> fields;
-    boolean parsedMaxBytesToRead = false;
-    byte[] bytesToRead;
 
     public SerialController getSerialComm() {
         return serialComm;
@@ -54,6 +60,54 @@ public class Repository {
 
     public void setNewValue(DataField newValue) {
         this.newValue = newValue;
+    }
+
+    public String getTxtRaw() {
+        return txtRaw.get();
+    }
+
+    public StringProperty txtRawProperty() {
+        return txtRaw;
+    }
+
+    public void setTxtRaw(String txtRaw) {
+        this.txtRaw.set(txtRaw);
+    }
+
+    public String getTxtRead() {
+        return txtRead.get();
+    }
+
+    public StringProperty txtReadProperty() {
+        return txtRead;
+    }
+
+    public void setTxtRead(String txtRead) {
+        this.txtRead.set(txtRead);
+    }
+
+    public String getTxtCrcCalc() {
+        return txtCrcCalc.get();
+    }
+
+    public StringProperty txtCrcCalcProperty() {
+        return txtCrcCalc;
+    }
+
+    public void setTxtCrcCalc(String txtCrcCalc) {
+        this.txtCrcCalc.set(txtCrcCalc);
+    }
+
+    public String getTxtCrc() {
+        return txtCrc.get();
+    }
+
+    public StringProperty txtCrcProperty() {
+        return txtCrc;
+    }
+
+    public void setTxtCrc(String txtCrc) {
+        this.txtCrc.set(txtCrc);
     }
 
     /**
