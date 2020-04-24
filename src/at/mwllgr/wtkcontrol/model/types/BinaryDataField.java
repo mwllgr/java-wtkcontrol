@@ -2,6 +2,8 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.model.DataField;
 
+import java.math.BigInteger;
+
 public class BinaryDataField extends DataField {
     private static final int BINARY_RADIX = 2;
     private static final int LENGTH = 1;
@@ -29,7 +31,8 @@ public class BinaryDataField extends DataField {
 
     public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
-            this.setValue(bytes[0]);
+            byte[] unsignedBytes = new byte[]{0x00, bytes[0]};
+            this.setValue(new BigInteger(unsignedBytes).intValue());
         }
         else
         {

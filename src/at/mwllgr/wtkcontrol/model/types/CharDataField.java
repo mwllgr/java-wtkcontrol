@@ -25,7 +25,7 @@ public class CharDataField extends DataField {
     public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
             byte[] unsignedBytes = new byte[]{0x00, bytes[0]};
-            this.setValue(new BigInteger(unsignedBytes).intValueExact());
+            this.setValue(new BigInteger(unsignedBytes).intValue());
         }
         else
         {
