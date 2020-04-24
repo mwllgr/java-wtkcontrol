@@ -171,7 +171,10 @@ public class Repository {
                     Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
             );
 
-            System.out.println("Add field from CSV: " + currentField.toString());
+            String fieldInfo = currentField.toString();
+            System.out.println("Add field from CSV: " + fieldInfo);
+            txtRead.set(txtRead.get() + "\n" + fieldInfo);
+
             // Add to HashMap
             fields.add(currentField);
         }
@@ -187,6 +190,7 @@ public class Repository {
 
         // Offset for byte stuffing
         int offset = 0;
+        txtRead.set("");
 
         // Go through all elements
         for (DataField field : fields) {
@@ -254,9 +258,11 @@ public class Repository {
                     break;
             }
 
-            System.out.println(
-                    String.format("%-25s= %s", field.getName(), newField.toString())
-            );
+            String parseInfo = String.format("%-25s= %s", field.getName(), newField.toString());
+            if(!txtRead.get().isEmpty()) parseInfo = "\n" + parseInfo;
+            String finalParseInfo = parseInfo;
+            javafx.application.Platform.runLater( () -> txtRead.set(txtRead.get() + finalParseInfo));
+            System.out.print(parseInfo);
         }
     }
 
