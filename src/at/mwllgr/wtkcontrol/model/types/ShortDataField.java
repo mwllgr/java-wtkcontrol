@@ -24,7 +24,10 @@ public class ShortDataField extends DataField {
 
     public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
-            this.setValue(new BigInteger(bytes).intValue());
+            byte[] unsignedShortArr = new byte[1 + bytes.length];
+            unsignedShortArr[0] = 0x00;
+            System.arraycopy(bytes, 0, unsignedShortArr, 1, bytes.length);
+            this.setValue(new BigInteger(unsignedShortArr).intValue());
         }
         else
         {
