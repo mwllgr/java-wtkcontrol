@@ -35,7 +35,7 @@ public class BooleanDataField extends DataField {
             if (bytes[0] == 0) {
                 this.setValue(false);
             } else if (bytes[0] == 1) {
-                this.setValue(false);
+                this.setValue(true);
             }
         }
         else

@@ -32,8 +32,8 @@
               <Label text="Keine Werte eingelesen" />
           </placeholder>
         <columns>
-          <TableColumn fx:id="colName" editable="false" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="colValue" editable="false" prefWidth="75.0" text="Wert" />
+          <TableColumn fx:id="colName" editable="false" prefWidth="75.0" sortable="false" text="Name" />
+          <TableColumn fx:id="colValue" editable="false" prefWidth="75.0" sortable="false" text="Wert" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

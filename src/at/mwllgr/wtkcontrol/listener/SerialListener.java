@@ -3,7 +3,9 @@ package at.mwllgr.wtkcontrol.listener;
 import at.mwllgr.wtkcontrol.controller.CRC16;
 import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
+import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.globals.ResponseMode;
+import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
@@ -29,6 +31,7 @@ public class SerialListener implements SerialPortDataListener {
 
     public void clearBuffer() {
         this.hexBuffer = "";
+        System.out.println("Buffer cleared.");
     }
 
     @Override
@@ -84,6 +87,10 @@ public class SerialListener implements SerialPortDataListener {
             } else if (responseBytes[1] == ResponseMode.WRITE_RESPONSE) {
                 // Write operation ACK
                 System.out.println("Received response: WRITE_RESPONSE");
+                Repository repo = Repository.getInstance();
+                // Read values again
+                this.clearBuffer();
+                repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repo.getBytesToRead());
             }
         }
         else

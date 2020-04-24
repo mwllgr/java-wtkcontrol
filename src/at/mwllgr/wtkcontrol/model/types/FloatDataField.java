@@ -58,6 +58,6 @@ public class FloatDataField extends DataField {
 
     @Override
     public String toString() {
-        return String.format("%.2f", this.getValue());
+        return String.format("%.1f", this.getValue());
     }
 }

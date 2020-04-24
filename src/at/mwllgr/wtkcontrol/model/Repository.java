@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 public class Repository {
     static final String CSV_SEPARATOR = ",";
     private final SerialController serialComm = SerialController.getInstance();
-    private String valueCopy = "";
+    private DataField newValue;
 
     // Singleton
     private static Repository instance;
@@ -48,12 +48,12 @@ public class Repository {
         return bytesToRead;
     }
 
-    public String getValueCopy() {
-        return valueCopy;
+    public DataField getNewValue() {
+        return newValue;
     }
 
-    public void setValueCopy(String valueCopy) {
-        this.valueCopy = valueCopy;
+    public void setNewValue(DataField newValue) {
+        this.newValue = newValue;
     }
 
     /**

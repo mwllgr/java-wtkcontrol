@@ -140,6 +140,7 @@ public class MainController {
      */
     @FXML
     private void fullRead(ActionEvent event) {
+        this.clearBuffer(null);
         repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repository.getBytesToRead());
     }
 
@@ -162,8 +163,7 @@ public class MainController {
 
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()) {
-            String valueCopy = field.toString();
-            this.repository.setValueCopy(valueCopy);
+            String currentValue = field.toString();
             if(!field.setValueFromString(result.get())) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Validierungsfehler");
@@ -175,8 +175,10 @@ public class MainController {
             }
             else
             {
+                this.repository.setNewValue(field);
                 byte[] writeAddr = BigInteger.valueOf(field.getAddress()).toByteArray();
                 repository.getSerialComm().sendCommand(CommandMode.WRITE_MEMORY, writeAddr, field.getBytes());
+                field.setValueFromString(currentValue);
             }
         }
     }
@@ -187,6 +189,7 @@ public class MainController {
      */
     @FXML
     private void clearBuffer(ActionEvent event) {
+        tvData.getSortOrder().clear();
         repository.getSerialComm().clearBuffer();
     }
 }
