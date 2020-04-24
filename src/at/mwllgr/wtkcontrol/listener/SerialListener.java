@@ -1,6 +1,7 @@
 package at.mwllgr.wtkcontrol.listener;
 
 import at.mwllgr.wtkcontrol.controller.CRC16;
+import at.mwllgr.wtkcontrol.controller.SerialController;
 import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.ResponseMode;
 import at.mwllgr.wtkcontrol.model.Repository;
@@ -24,6 +25,10 @@ public class SerialListener implements SerialPortDataListener {
     public SerialListener(SerialPort port) {
         this.port = port;
         System.out.println("SerialListener: Started!");
+    }
+
+    public void clearBuffer() {
+        this.hexBuffer = "";
     }
 
     @Override

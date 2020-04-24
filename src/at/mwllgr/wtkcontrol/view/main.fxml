@@ -48,7 +48,7 @@
          </GridPane.margin></Button>
       <Button fx:id="btnRead" mnemonicParsing="false" onAction="#fullRead" text="Einlesen" GridPane.columnIndex="1" />
       <Button fx:id="btnWakeup" disable="true" mnemonicParsing="false" onAction="#sendWakeupCmd" text="Wakeup" GridPane.columnIndex="3" />
-      <Button fx:id="btnClearBuffer" mnemonicParsing="false" text="Buffer leeren" GridPane.columnIndex="4" />
+      <Button fx:id="btnClearBuffer" mnemonicParsing="false" onAction="#clearBuffer" text="Buffer leeren" GridPane.columnIndex="4" />
       <Button fx:id="btnOpenClosePort" mnemonicParsing="false" onAction="#openOrClosePort" text="Port öffnen" GridPane.columnIndex="5" GridPane.halignment="RIGHT" />
       <Label minHeight="-Infinity" prefHeight="15.0" text="Rohdaten:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="1" />
       <TextArea fx:id="txtRaw" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Erhaltene Bytes" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="2">

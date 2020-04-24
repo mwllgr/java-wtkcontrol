@@ -35,6 +35,10 @@ public class SerialController {
         return SerialPort.getCommPorts();
     }
 
+    public void clearBuffer() {
+        this.listener.clearBuffer();
+    }
+
     /***
      * Validates the port (null-check) and tries to open/close it.
      *

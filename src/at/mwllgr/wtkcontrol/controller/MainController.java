@@ -180,4 +180,13 @@ public class MainController {
             }
         }
     }
+
+    /**
+     * Manually requests the whole data as listed in the CSV file.
+     * @param event Button event
+     */
+    @FXML
+    private void clearBuffer(ActionEvent event) {
+        repository.getSerialComm().clearBuffer();
+    }
 }
