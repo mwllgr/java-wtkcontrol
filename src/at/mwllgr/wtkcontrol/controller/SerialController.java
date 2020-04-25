@@ -158,13 +158,18 @@ public class SerialController {
      * @param bytes Length or bytes to write
      */
     public void sendCommand(byte[] mode, byte[] addr, byte[] bytes) {
+        // Replace DLE with DLE DLE (byte stuffing)
+        String rawBytes = Tools.getByteArrayAsHexString(bytes, true);
+        rawBytes = rawBytes.replace("10", "1010").replace(" ", "");
+        byte[] escapedBytes = Tools.hexStringToByteArray(rawBytes);
+
         // Prepare bytes for CRC calculation
-        byte[] crcCalcBytes = new byte[SLAVE_ADDR.length + mode.length + addr.length + bytes.length];
+        byte[] crcCalcBytes = new byte[SLAVE_ADDR.length + mode.length + addr.length + escapedBytes.length];
         ByteBuffer crcBuff = ByteBuffer.wrap(crcCalcBytes);
         crcBuff.put(SLAVE_ADDR);
         crcBuff.put(mode);
         crcBuff.put(addr);
-        crcBuff.put(bytes);
+        crcBuff.put(escapedBytes);
         crcCalcBytes = crcBuff.array();
 
         // Calculate the CRC
