@@ -278,10 +278,13 @@ public class Repository {
 
     public boolean writeToCsv(String fileName) {
         try {
+            System.out.println("Exporting to " + fileName + "...");
             PrintWriter writer = new PrintWriter(fileName);
             writer.print(this.getCsvList());
+            writer.close();
         }
         catch (IOException ex) {
+            System.err.println("ERR: " + ex.getMessage());
             return false;
         }
 
@@ -291,9 +294,9 @@ public class Repository {
     public String getCsvList() {
         StringBuilder exportString = new StringBuilder();
         this.getFields().forEach(field -> {
-            exportString.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + CSV_SEPARATOR);
-            exportString.append(field.getName() + CSV_SEPARATOR);
-            exportString.append(field.toString() + "\n");
+            exportString.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"))).append(CSV_SEPARATOR);
+            exportString.append(field.getName()).append(CSV_SEPARATOR);
+            exportString.append(field.toString()).append("\n");
         });
 
         return exportString.toString();

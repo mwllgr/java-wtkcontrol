@@ -89,7 +89,7 @@
          <GridPane.margin>
             <Insets right="7.0" />
          </GridPane.margin></Label>
-      <Button fx:id="btnExport" disable="true" mnemonicParsing="false" text="Export" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="9" />
+      <Button fx:id="btnExport" disable="true" mnemonicParsing="false" onAction="#exportToFile" text="Export" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="9" />
       <Button fx:id="btnAddressList" mnemonicParsing="false" onAction="#selectAddressList" text="Adressliste" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <Label text="Daten für CRC-Berechnung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="5" />
       <Label text="CRC-Überprüfung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="7" />

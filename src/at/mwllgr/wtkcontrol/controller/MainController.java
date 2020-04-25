@@ -18,6 +18,8 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class MainController {
@@ -35,6 +37,7 @@ public class MainController {
     @FXML
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnExport;
     final FileChooser fileChooser = new FileChooser();
+    final FileChooser fileSaver = new FileChooser();
 
     private final Repository repository = Repository.getInstance();
 
@@ -91,6 +94,7 @@ public class MainController {
             btnOpenClosePort.setText("Port schließen");
             btnWakeup.setDisable(false);
             btnSync.setDisable(false);
+            btnExport.setDisable(false);
         }
         else
         {
@@ -98,6 +102,7 @@ public class MainController {
             btnOpenClosePort.setText("Port öffnen");
             btnWakeup.setDisable(true);
             btnSync.setDisable(true);
+            btnExport.setDisable(true);
         }
     }
 
@@ -215,5 +220,44 @@ public class MainController {
     private void clearBuffer(ActionEvent event) {
         tvData.getSortOrder().clear();
         repository.getSerialComm().clearBuffer();
+    }
+
+    /**
+     * Opens a file chooser and allows the user to select a CSV file.
+     * The Repository parses the file after that.
+     * @param event Button event
+     */
+    @FXML
+    private void exportToFile(ActionEvent event) {
+        fileSaver.setTitle("Speicherort auswählen");
+        fileSaver.setInitialFileName("wtkexport-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss")) + ".csv");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Kommagetrennt (*.csv)", "*.txt");
+        fileSaver.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(".csv-Dateien", "*.csv")
+        );
+        File list = fileSaver.showSaveDialog(((Node)event.getTarget()).getScene().getWindow());
+
+        boolean success = false;
+        if(list != null) success = repository.writeToCsv(list.getPath());
+
+        if(!success && list != null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Dateifehler");
+
+            alert.setHeaderText(null);
+            alert.setContentText("Die Daten konnten nicht exportiert werden.");
+
+            alert.showAndWait();
+        }
+        else
+        {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Export abgeschlossen");
+
+            alert.setHeaderText(null);
+            alert.setContentText("Die Daten wurden erfolgreich exportiert.");
+
+            alert.showAndWait();
+        }
     }
 }
