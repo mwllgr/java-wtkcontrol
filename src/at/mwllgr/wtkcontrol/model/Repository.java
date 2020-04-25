@@ -158,6 +158,7 @@ public class Repository {
      */
     private void addDataFieldToList(String line) {
         String[] splitLine = line.split(CSV_SEPARATOR);
+        DataField currentField = null;
 
         if(!parsedMaxBytesToRead) {
             // First line contains the (max) bytes to read
@@ -166,16 +167,21 @@ public class Repository {
             parsedMaxBytesToRead = true;
         } else {
             // Create data field from line
-            DataField currentField = new DataField(
-                    splitLine[DataFieldOffset.NAME].trim(),
-                    splitLine[DataFieldOffset.MENU].trim(),
-                    Tools.hexStringToInt(splitLine[DataFieldOffset.ADDRESS].trim()),
-                    Tools.hexStringToInt(splitLine[DataFieldOffset.LENGTH].trim()),
-                    DataFieldType.fromString(splitLine[DataFieldOffset.TYPE].trim()),
-                    Float.parseFloat(splitLine[DataFieldOffset.MIN].trim()),
-                    Float.parseFloat(splitLine[DataFieldOffset.MAX].trim()),
-                    Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
-            );
+            try {
+                currentField = new DataField(
+                        splitLine[DataFieldOffset.NAME].trim(),
+                        splitLine[DataFieldOffset.MENU].trim(),
+                        Tools.hexStringToInt(splitLine[DataFieldOffset.ADDRESS].trim()),
+                        Tools.hexStringToInt(splitLine[DataFieldOffset.LENGTH].trim()),
+                        DataFieldType.fromString(splitLine[DataFieldOffset.TYPE].trim()),
+                        Float.parseFloat(splitLine[DataFieldOffset.MIN].trim()),
+                        Float.parseFloat(splitLine[DataFieldOffset.MAX].trim()),
+                        Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
+                );
+            } catch (NumberFormatException numEx) {
+                System.err.println("ERR: CSV-Adressdaten ungültig! Fehler: " + numEx.getMessage());
+                return;
+            }
 
             String fieldInfo = currentField.toString();
             System.out.println("Add field from CSV: " + fieldInfo);
