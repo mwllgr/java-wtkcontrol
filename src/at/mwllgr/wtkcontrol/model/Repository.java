@@ -39,6 +39,7 @@ public class Repository {
     // If parsedMaxBytesToRead is true, the first CSV line is skipped.
     boolean parsedMaxBytesToRead = false;
     byte[] bytesToRead; // Max bytes to read (all bytes)
+    boolean loggerEnabled = false;
 
     // Singleton
     private static Repository instance;
@@ -94,13 +95,22 @@ public class Repository {
         this.txtCrc.set(txtCrc);
     }
 
+    public boolean isLoggerEnabled() {
+        return loggerEnabled;
+    }
+
+    public void setLoggerEnabled(boolean loggerEnabled) {
+        this.loggerEnabled = loggerEnabled;
+    }
+
     /**
      * Initializes the HashMap and tries to read the CSV file.
+     *
      * @param addressList File with address list
      * @return false on error
      */
     public boolean setAddressList(File addressList) {
-        if(addressList.exists() && addressList.canRead()) {
+        if (addressList.exists() && addressList.canRead()) {
             try {
                 // All checks passed, only failure might be an Exception now
                 readFromCsv(addressList);
@@ -252,6 +262,10 @@ public class Repository {
             // Add line to "Read" TextArea
             javafx.application.Platform.runLater(() -> txtRead.set(txtRead.get() + finalParseInfo));
             System.out.print(parseInfo);
+        }
+
+        if (this.loggerEnabled) {
+            this.writeToCsv("wtklogger-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss")) + ".csv");
         }
     }
 

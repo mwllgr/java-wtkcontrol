@@ -117,6 +117,7 @@ public class MainController {
             if (loggerTimer != null) {
                 chkLogger.setSelected(false);
                 loggerTimer.stop();
+                repository.setLoggerEnabled(false);
             }
         }
     }
@@ -310,10 +311,11 @@ public class MainController {
     @FXML
     private void toggleLogger(ActionEvent event) {
         if (chkLogger.isSelected()) {
+            repository.setLoggerEnabled(true);
             loggerTimer = new Timeline(new KeyFrame(Duration.seconds(60), new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    System.out.println("Logged!");
+                    fullRead(null);
                 }
             }));
             loggerTimer.setCycleCount(Timeline.INDEFINITE);
@@ -321,6 +323,7 @@ public class MainController {
             System.out.println("Logger enabled");
         } else {
             loggerTimer.stop();
+            repository.setLoggerEnabled(false);
             System.out.println("Logger disabled");
         }
     }
