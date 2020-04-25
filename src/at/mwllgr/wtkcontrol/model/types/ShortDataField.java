@@ -4,6 +4,14 @@ import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.math.BigInteger;
 
+/**
+ * Type:    Short (n)
+ * Min:     0
+ * Max:     65535
+ * Bytes:   2
+ * <p>
+ * Example: 34836
+ */
 public class ShortDataField extends DataField {
     private static final int LENGTH = 2;
     private int value;
@@ -28,9 +36,7 @@ public class ShortDataField extends DataField {
             unsignedShortArr[0] = 0x00;
             System.arraycopy(bytes, 0, unsignedShortArr, 1, bytes.length);
             this.setValue(new BigInteger(unsignedShortArr).intValue());
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Invalid byte length for data type!");
         }
     }
@@ -39,8 +45,7 @@ public class ShortDataField extends DataField {
         int newValue = 0;
         try {
             newValue = Integer.parseInt(newValueStr);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             return false;
         }
 

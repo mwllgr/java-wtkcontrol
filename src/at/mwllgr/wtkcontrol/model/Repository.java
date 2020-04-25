@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -21,19 +20,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
+/**
+ * Main repository class:
+ * Responsible for data storage, contains SerialController object too.
+ */
 public class Repository {
     static final String CSV_SEPARATOR = ",";
     private final SerialController serialComm = SerialController.getInstance();
     private DataField newValue;
 
+    // Text areas in main GUI
     private final StringProperty txtRaw = new SimpleStringProperty();
     private final StringProperty txtRead = new SimpleStringProperty();
     private final StringProperty txtCrcCalc = new SimpleStringProperty();
     private final StringProperty txtCrc = new SimpleStringProperty();
 
     ObservableList<DataField> fields;
+    // If parsedMaxBytesToRead is true, the first CSV line is skipped.
     boolean parsedMaxBytesToRead = false;
-    byte[] bytesToRead;
+    byte[] bytesToRead; // Max bytes to read (all bytes)
 
     // Singleton
     private static Repository instance;
@@ -127,9 +132,7 @@ public class Repository {
             } catch (IOException e) {
                 return false;
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
@@ -161,9 +164,7 @@ public class Repository {
             bytesToRead = Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH]);
             System.out.println("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead, true));
             parsedMaxBytesToRead = true;
-        }
-        else
-        {
+        } else {
             // Create data field from line
             DataField currentField = new DataField(
                     splitLine[DataFieldOffset.NAME].trim(),
@@ -180,13 +181,14 @@ public class Repository {
             System.out.println("Add field from CSV: " + fieldInfo);
             txtRead.set(txtRead.get() + "\n" + fieldInfo);
 
-            // Add to HashMap
+            // Add to List
             fields.add(currentField);
         }
     }
 
     /**
-     * Parses every field in our HashMap.
+     * Parses every field in our List.
+     *
      * @param responseBytes Bytes to parse
      */
     public void parseResponse(byte[] responseBytes) {
@@ -205,22 +207,21 @@ public class Repository {
                 if(field.getAddress() < bytesToReadInt - 2) {
                     // Check for byte stuffing
                     // 0x10 0x10 -> skip one 0x10
-                    // See https://web.cs.wpi.edu/~rek/Undergrad_Nets/C04/BitByteStuffing.pdf, slide page 8
+                    // See https://web.cs.wpi.edu/~rek/Undergrad_Nets/C04/BitByteStuffing.pdf, page 8
                     int dleFirst = responseBytes[field.getAddress() + i];
                     int dleSecond = responseBytes[field.getAddress() + i + 1];
                     if(dleFirst == 0x10 && dleSecond == 0x10) {
                         offset++;
                         System.out.println("Skipped 0x10 - offset set to " + offset + "!");
                     }
-                }
-                else
-                {
-                    System.out.println("Byte stuff check skipped.");
+                } else {
+                    System.out.println("Byte stuff check skipped (end)");
                 }
 
                 byteValue[i] = responseBytes[field.getAddress() + i + offset];
             }
 
+            // Create objects depending on type value
             int fieldIndex = fields.indexOf(field);
             DataField newField = null;
             switch(field.getType()) {
@@ -246,11 +247,10 @@ public class Repository {
                     break;
                 case UNSIGNED_CHAR:
                     if(field.getMin() == 0 && field.getMax() == 1) {
+                        // BOOLEAN
                         newField = new BooleanDataField(field);
                         ((BooleanDataField) newField).setBytes(byteValue);
-                    }
-                    else
-                    {
+                    } else {
                         newField = new CharDataField(field);
                         ((CharDataField) newField).setBytes(byteValue);
                     }
@@ -267,7 +267,8 @@ public class Repository {
             parseInfo = String.format("%-25s= %s", field.getName(), newField.toString() + " (" + Tools.getByteArrayAsHexString(newField.getBytes(), true) + ")");
             parseInfo = "\n" + parseInfo;
             String finalParseInfo = parseInfo;
-            javafx.application.Platform.runLater( () -> txtRead.set(txtRead.get() + finalParseInfo));
+            // Add line to "Read" TextArea
+            javafx.application.Platform.runLater(() -> txtRead.set(txtRead.get() + finalParseInfo));
             System.out.print(parseInfo);
         }
     }
@@ -276,14 +277,19 @@ public class Repository {
         return this.fields;
     }
 
+    /**
+     * Initiates an export for the current fields.
+     *
+     * @param fileName Save path
+     * @return true = success, false = error
+     */
     public boolean writeToCsv(String fileName) {
         try {
             System.out.println("Exporting to " + fileName + "...");
             PrintWriter writer = new PrintWriter(fileName);
             writer.print(this.getCsvList());
             writer.close();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.err.println("ERR: " + ex.getMessage());
             return false;
         }
@@ -291,6 +297,11 @@ public class Repository {
         return true;
     }
 
+    /**
+     * Gets the current fields as a CSV string.
+     *
+     * @return CSV string
+     */
     public String getCsvList() {
         StringBuilder exportString = new StringBuilder();
         this.getFields().forEach(field -> {

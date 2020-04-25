@@ -1,9 +1,12 @@
 package at.mwllgr.wtkcontrol.model;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A class for time values including "24" as valid hour.
+ * Needed because the heating system distinguishes between "24" and "00".
+ */
 public class TimeWith24 {
     static final int MIN = 0;
     static final int MAX_HOURS = 24;
@@ -64,20 +67,23 @@ public class TimeWith24 {
         return String.format("%02d:%02d:%02d", this.getHours(), this.getMinutes(), this.getSeconds());
     }
 
+    /**
+     * Parses a time string.
+     *
+     * @param time Time string
+     * @return true = success, false = error
+     */
     public boolean fromString(String time) {
         Pattern pattern = Pattern.compile(TIME_REGEX);
         Matcher matcher = pattern.matcher(time);
 
-        if(matcher.find())
-        {
+        if (matcher.find()) {
             String[] timeValues = time.split(":");
             int hours = Integer.parseInt(timeValues[0]);
             int minutes = Integer.parseInt(timeValues[1]);
             int seconds = Integer.parseInt(timeValues[2]);
             return this.setHours(hours) && this.setMinutes(minutes) && this.setSeconds(seconds);
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

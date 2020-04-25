@@ -1,11 +1,18 @@
 package at.mwllgr.wtkcontrol.model.types;
 
-import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+/**
+ * Type:    Float (f)
+ * Min:     3.4E-38 (?)
+ * Max:     3.4E+38 (?)
+ * Bytes:   4
+ * <p>
+ * Example: 23.5
+ */
 public class FloatDataField extends DataField {
     private static final int LENGTH = 4;
     private float value;
@@ -28,9 +35,7 @@ public class FloatDataField extends DataField {
         if(bytes.length == LENGTH) {
             float converted = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).getFloat();
             this.setValue(converted);
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Invalid byte length for data type!");
         }
     }
@@ -39,8 +44,7 @@ public class FloatDataField extends DataField {
         float newValue;
         try {
             newValue = Float.parseFloat(floatString);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             return false;
         }
 
@@ -53,6 +57,7 @@ public class FloatDataField extends DataField {
     }
 
     public byte[] getBytes() {
+        // Little Endian byte order required
         return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(this.getValue()).array();
     }
 

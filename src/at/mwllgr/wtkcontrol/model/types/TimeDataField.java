@@ -1,12 +1,16 @@
 package at.mwllgr.wtkcontrol.model.types;
 
-import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.TimeWith24;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
+/**
+ * Type:    Time (t)
+ * Min:     00:00:00
+ * Max:     24:59:59
+ * Bytes:   3
+ * <p>
+ * Example: 23:00:00
+ */
 public class TimeDataField extends DataField {
     private static final int LENGTH = 3;
     private TimeWith24 value;

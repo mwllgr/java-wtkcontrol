@@ -1,16 +1,17 @@
 package at.mwllgr.wtkcontrol.dialogs;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import javax.swing.*;
 import java.util.Optional;
 
+/**
+ * Special change dialog for boolean fields.
+ */
 public class BooleanDialog {
-    private String changeValue;
-    private boolean oldValue;
+    private final String changeValue;
+    private final boolean oldValue;
 
     public BooleanDialog(String changeValue, boolean oldValue) {
         this.changeValue = changeValue;
@@ -55,6 +56,7 @@ public class BooleanDialog {
 
         if(result.isPresent()) {
             System.out.println(this.changeValue + " = " + result.get().toString());
+            // Return correct value for serial communication
             return result.get() ? "1" : "0";
         }
 

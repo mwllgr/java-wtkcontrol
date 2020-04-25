@@ -4,6 +4,10 @@ import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import javafx.beans.property.SimpleStringProperty;
 
+/**
+ * Main data field class.
+ * Implements setValueFromString(String time) and getBytes() for extended classes.
+ */
 public class DataField {
     private final SimpleStringProperty name;
     private SimpleStringProperty toString;
@@ -117,5 +121,6 @@ public class DataField {
 
     // The following methods should be overridden in the subclasses
     public boolean setValueFromString(String time) { return false; }
+
     public byte[] getBytes() { return null; }
 }

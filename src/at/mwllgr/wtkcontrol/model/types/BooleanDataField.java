@@ -2,6 +2,14 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.model.DataField;
 
+/**
+ * Type:    Boolean (c = Char)
+ * Min:     0
+ * Max:     1
+ * Bytes:   1
+ * <p>
+ * Example: 0
+ */
 public class BooleanDataField extends DataField {
     private static final int LENGTH = 1;
     private boolean value;
@@ -37,16 +45,13 @@ public class BooleanDataField extends DataField {
             } else if (bytes[0] == 1) {
                 this.setValue(true);
             }
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Invalid byte length for data type!");
         }
     }
 
     public boolean setValueFromString(String bool) {
-        if(bool.equals("0") || bool.equals("1"))
-        {
+        if(bool.equals("0") || bool.equals("1")) {
             this.setValue(bool.equals("1"));
             return true;
         }
@@ -56,6 +61,7 @@ public class BooleanDataField extends DataField {
 
     @Override
     public String toString() {
+        // 1 = true, 0 = false
         return this.getValue() ? "1" : "0";
     }
 }

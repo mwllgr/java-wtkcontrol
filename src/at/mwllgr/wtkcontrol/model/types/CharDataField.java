@@ -4,6 +4,14 @@ import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.math.BigInteger;
 
+/**
+ * Type:    Char (c)
+ * Min:     0
+ * Max:     255
+ * Bytes:   1
+ * <p>
+ * Example: 236
+ */
 public class CharDataField extends DataField {
     private static final int LENGTH = 1;
     private int value;
@@ -24,11 +32,10 @@ public class CharDataField extends DataField {
 
     public void setBytes(byte[] bytes) {
         if(bytes.length == LENGTH) {
+            // Prepend 00 to force positive signing
             byte[] unsignedBytes = new byte[]{0x00, bytes[0]};
             this.setValue(new BigInteger(unsignedBytes).intValue());
-        }
-        else
-        {
+        } else {
             throw new IllegalArgumentException("Invalid byte length for data type!");
         }
     }
@@ -37,8 +44,7 @@ public class CharDataField extends DataField {
         int newValue;
         try {
             newValue = Integer.parseInt(charStr);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             return false;
         }
 
