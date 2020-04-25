@@ -6,13 +6,17 @@ import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
 import at.mwllgr.wtkcontrol.model.types.BooleanDataField;
 import com.fazecast.jSerialComm.SerialPort;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -31,15 +35,15 @@ public class MainController {
     @FXML
     private TableColumn<DataField, String> colName, colValue;
     ObservableList<DataField> items;
-
+    Timeline loggerTimer;
     @FXML
     private TextArea txtRaw, txtRead, txtCrcCalc, txtCrc;
-
     @FXML
     private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnExport;
     final FileChooser fileChooser = new FileChooser();
     final FileChooser fileSaver = new FileChooser();
-
+    @FXML
+    private CheckBox chkLogger;
     private final Repository repository = Repository.getInstance();
 
     @FXML
@@ -102,12 +106,18 @@ public class MainController {
             btnWakeup.setDisable(false);
             btnSync.setDisable(false);
             btnExport.setDisable(false);
+            chkLogger.setDisable(false);
         } else {
             // Port now closed
             btnOpenClosePort.setText("Port öffnen");
             btnWakeup.setDisable(true);
             btnSync.setDisable(true);
             btnExport.setDisable(true);
+            chkLogger.setDisable(true);
+            if (loggerTimer != null) {
+                chkLogger.setSelected(false);
+                loggerTimer.stop();
+            }
         }
     }
 
@@ -290,5 +300,28 @@ public class MainController {
     private void syncDateTime(ActionEvent event) {
         this.clearBuffer(null);
         repository.getSerialComm().syncTimeDate();
+    }
+
+    /**
+     * Called when "Logger" checkbox toggled.
+     *
+     * @param event CheckBox event
+     */
+    @FXML
+    private void toggleLogger(ActionEvent event) {
+        if (chkLogger.isSelected()) {
+            loggerTimer = new Timeline(new KeyFrame(Duration.seconds(60), new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println("Logged!");
+                }
+            }));
+            loggerTimer.setCycleCount(Timeline.INDEFINITE);
+            loggerTimer.play();
+            System.out.println("Logger enabled");
+        } else {
+            loggerTimer.stop();
+            System.out.println("Logger disabled");
+        }
     }
 }

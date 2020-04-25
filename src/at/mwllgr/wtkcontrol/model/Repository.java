@@ -44,7 +44,7 @@ public class Repository {
     private static Repository instance;
 
     private Repository() {
-        this.fields = FXCollections.observableList(new LinkedList<DataField>());
+        this.fields = FXCollections.observableList(new LinkedList<>());
     }
 
     public static Repository getInstance () {
@@ -62,16 +62,8 @@ public class Repository {
         return bytesToRead;
     }
 
-    public DataField getNewValue() {
-        return newValue;
-    }
-
     public void setNewValue(DataField newValue) {
         this.newValue = newValue;
-    }
-
-    public String getTxtRaw() {
-        return txtRaw.get();
     }
 
     public StringProperty txtRawProperty() {
@@ -82,20 +74,8 @@ public class Repository {
         this.txtRaw.set(txtRaw);
     }
 
-    public String getTxtRead() {
-        return txtRead.get();
-    }
-
     public StringProperty txtReadProperty() {
         return txtRead;
-    }
-
-    public void setTxtRead(String txtRead) {
-        this.txtRead.set(txtRead);
-    }
-
-    public String getTxtCrcCalc() {
-        return txtCrcCalc.get();
     }
 
     public StringProperty txtCrcCalcProperty() {
@@ -104,10 +84,6 @@ public class Repository {
 
     public void setTxtCrcCalc(String txtCrcCalc) {
         this.txtCrcCalc.set(txtCrcCalc);
-    }
-
-    public String getTxtCrc() {
-        return txtCrc.get();
     }
 
     public StringProperty txtCrcProperty() {

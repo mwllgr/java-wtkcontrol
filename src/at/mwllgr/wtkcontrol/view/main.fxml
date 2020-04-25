@@ -81,10 +81,12 @@
          <font>
             <Font name="Bitstream Vera Sans Mono" size="13.0" />
          </font></TextArea>
-      <CheckBox fx:id="chkLogger" disable="true" mnemonicParsing="false" text="Logger" GridPane.rowIndex="9">
+      <CheckBox fx:id="chkLogger" disable="true" mnemonicParsing="false" onAction="#toggleLogger" text="Logger"
+                GridPane.rowIndex="9">
          <GridPane.margin>
-            <Insets left="7.0" />
-         </GridPane.margin></CheckBox>
+            <Insets left="7.0"/>
+         </GridPane.margin>
+      </CheckBox>
       <Label snapToPixel="false" text="mwllgr" textAlignment="RIGHT" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
          <GridPane.margin>
             <Insets right="7.0" />
