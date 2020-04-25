@@ -10,7 +10,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -137,18 +136,20 @@ public class Repository {
      * @throws IOException on file error
      */
     private void readFromCsv(File file) throws IOException {
+        this.fields.clear();
+        this.parsedMaxBytesToRead = false;
         Stream<String> fileStream = Files.lines(file.toPath());
 
         fileStream
                 .skip(1)
-                .forEach(this::addDataFieldToHashMap);
+                .forEach(this::addDataFieldToList);
     }
 
     /**
      * Adds the data fields from the CSV file to the local fields variable.
      * @param line One line in the CSV file
      */
-    private void addDataFieldToHashMap(String line) {
+    private void addDataFieldToList(String line) {
         String[] splitLine = line.split(CSV_SEPARATOR);
 
         if(!parsedMaxBytesToRead) {
