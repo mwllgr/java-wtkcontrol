@@ -235,12 +235,12 @@ public class MainController {
         fileSaver.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(".csv-Dateien", "*.csv")
         );
-        File list = fileSaver.showSaveDialog(((Node)event.getTarget()).getScene().getWindow());
+        File csv = fileSaver.showSaveDialog(((Node)event.getTarget()).getScene().getWindow());
 
         boolean success = false;
-        if(list != null) success = repository.writeToCsv(list.getPath());
+        if(csv != null) success = repository.writeToCsv(csv.getPath());
 
-        if(!success && list != null) {
+        if(!success && csv != null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Dateifehler");
 
@@ -249,7 +249,7 @@ public class MainController {
 
             alert.showAndWait();
         }
-        else
+        else if(success)
         {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Export abgeschlossen");
