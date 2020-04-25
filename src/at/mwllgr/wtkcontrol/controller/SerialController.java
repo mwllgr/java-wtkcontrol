@@ -2,10 +2,13 @@ package at.mwllgr.wtkcontrol.controller;
 
 import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.listener.SerialListener;
-import com.fazecast.jSerialComm.*;
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 import javafx.scene.control.Alert;
 
 import java.nio.ByteBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SerialController {
     public static final byte[] FULLREAD_START_ADDR = { 0x00, 0x00 };
@@ -127,9 +130,31 @@ public class SerialController {
     }
 
     /**
+     * Syncs the heating clock with the local system clock.
+     */
+    public void syncTimeDate() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        String outputString = currentDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss"));
+        System.out.println("Setting date to: " + outputString);
+
+        byte[] writeDateTime = new byte[]{
+                Integer.valueOf(currentDateTime.getSecond()).byteValue(),
+                Integer.valueOf(currentDateTime.getMinute()).byteValue(),
+                Integer.valueOf(currentDateTime.getHour()).byteValue(),
+                Integer.valueOf(currentDateTime.getDayOfMonth()).byteValue(),
+                Integer.valueOf(currentDateTime.getMonthValue()).byteValue(),
+                // Get 2-digit year
+                Integer.valueOf(Integer.parseInt(currentDateTime.format(DateTimeFormatter.ofPattern("yy")))).byteValue()
+        };
+
+        this.sendCommand(CommandMode.WRITE_DATETIME, new byte[]{0x00, 0x00}, writeDateTime);
+    }
+
+    /**
      * Sends a command with the specified mode, address and length/bytes.
-     * @param mode Read, write or DateTime
-     * @param addr Start address
+     *
+     * @param mode  Read, write or DateTime
+     * @param addr  Start address
      * @param bytes Length or bytes to write
      */
     public void sendCommand(byte[] mode, byte[] addr, byte[] bytes) {

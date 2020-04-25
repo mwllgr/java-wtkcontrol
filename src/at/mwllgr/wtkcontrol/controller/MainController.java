@@ -280,4 +280,15 @@ public class MainController {
             alert.showAndWait();
         }
     }
+
+    /**
+     * Called when "Sync time/date" button clicked.
+     *
+     * @param event Button event
+     */
+    @FXML
+    private void syncDateTime(ActionEvent event) {
+        this.clearBuffer(null);
+        repository.getSerialComm().syncTimeDate();
+    }
 }

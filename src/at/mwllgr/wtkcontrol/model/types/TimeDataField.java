@@ -48,9 +48,9 @@ public class TimeDataField extends DataField {
 
     public byte[] getBytes() {
         return new byte[] {
-                Integer.valueOf(this.getValue().getSeconds()).byteValue(),
-                Integer.valueOf(this.getValue().getMinutes()).byteValue(),
-                Integer.valueOf(this.getValue().getHours()).byteValue()
+                Integer.valueOf(this.getValue().getSecond()).byteValue(),
+                Integer.valueOf(this.getValue().getMinute()).byteValue(),
+                Integer.valueOf(this.getValue().getHour()).byteValue()
         };
     }
 

@@ -3,8 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.text.Font?>
 <GridPane alignment="center" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="750.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.mwllgr.wtkcontrol.controller.MainController">
    <rowConstraints>
       <RowConstraints maxHeight="1.7976931348623157E308" minHeight="33.0" prefHeight="65.0" vgrow="NEVER" />
@@ -43,10 +42,11 @@
             <Insets left="7.0" />
          </GridPane.margin>
       </TableView>
-      <Button fx:id="btnSync" disable="true" mnemonicParsing="false" text="Zeitsync.">
+      <Button fx:id="btnSync" disable="true" mnemonicParsing="false" onAction="#syncDateTime" text="Zeitsync.">
          <GridPane.margin>
-            <Insets left="7.0" />
-         </GridPane.margin></Button>
+            <Insets left="7.0"/>
+         </GridPane.margin>
+      </Button>
       <Button fx:id="btnRead" mnemonicParsing="false" onAction="#fullRead" text="Einlesen" GridPane.columnIndex="1" />
       <Button fx:id="btnWakeup" disable="true" mnemonicParsing="false" onAction="#sendWakeupCmd" text="Wakeup" GridPane.columnIndex="3" />
       <Button fx:id="btnClearBuffer" mnemonicParsing="false" onAction="#clearBuffer" text="Buffer leeren" GridPane.columnIndex="4" />
