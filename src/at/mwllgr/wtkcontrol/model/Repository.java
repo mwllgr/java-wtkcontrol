@@ -133,6 +133,7 @@ public class Repository {
         this.parsedMaxBytesToRead = false;
         Stream<String> fileStream = Files.lines(file.toPath());
 
+        txtRead.set("");
         fileStream
                 .skip(1)
                 .forEach(this::addDataFieldToList);
@@ -170,8 +171,9 @@ public class Repository {
             }
 
             String fieldInfo = currentField.toString();
+            fieldInfo = txtRead.get() + fieldInfo;
             System.out.println("Add field from CSV: " + fieldInfo);
-            txtRead.set(txtRead.get() + "\n" + fieldInfo);
+            txtRead.set(fieldInfo + "\n");
 
             // Add to List
             fields.add(currentField);
