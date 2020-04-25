@@ -11,9 +11,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
@@ -270,5 +274,28 @@ public class Repository {
 
     public ObservableList<DataField> getFields() {
         return this.fields;
+    }
+
+    public boolean writeToCsv(String fileName) {
+        try {
+            PrintWriter writer = new PrintWriter(fileName);
+            writer.print(this.getCsvList());
+        }
+        catch (IOException ex) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public String getCsvList() {
+        StringBuilder exportString = new StringBuilder();
+        this.getFields().forEach(field -> {
+            exportString.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) + CSV_SEPARATOR);
+            exportString.append(field.getName() + CSV_SEPARATOR);
+            exportString.append(field.toString() + "\n");
+        });
+
+        return exportString.toString();
     }
 }
