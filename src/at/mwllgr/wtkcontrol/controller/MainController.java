@@ -1,8 +1,11 @@
 package at.mwllgr.wtkcontrol.controller;
 
+import at.mwllgr.wtkcontrol.dialogs.BooleanDialog;
 import at.mwllgr.wtkcontrol.globals.CommandMode;
+import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
+import at.mwllgr.wtkcontrol.model.types.BooleanDataField;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -164,29 +167,42 @@ public class MainController {
             return;
         }
 
-        TextInputDialog dialog = new TextInputDialog(field.toString());
-        dialog.setTitle("Wert bearbeiten");
-        dialog.setHeaderText("Wert bearbeiten");
-        dialog.setContentText(field.getName());
-
-        Optional<String> result = dialog.showAndWait();
-        if(result.isPresent()) {
-            String currentValue = field.toString();
-            if(!field.setValueFromString(result.get())) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Validierungsfehler");
-
-                alert.setHeaderText(null);
-                alert.setContentText("Die eingegebenen Daten sind für dieses Feld ungültig.");
-
-                alert.showAndWait();
-            }
-            else
-            {
+        if(field instanceof BooleanDataField) {
+            BooleanDialog boolDiag = new BooleanDialog(field.getName(), ((BooleanDataField) field).getValue());
+            String newVal = boolDiag.show();
+            if(!newVal.isEmpty()) {
+                field.setValueFromString(newVal);
                 this.repository.setNewValue(field);
                 byte[] writeAddr = BigInteger.valueOf(field.getAddress()).toByteArray();
                 repository.getSerialComm().sendCommand(CommandMode.WRITE_MEMORY, writeAddr, field.getBytes());
-                field.setValueFromString(currentValue);
+            }
+        }
+        else
+        {
+            TextInputDialog dialog = new TextInputDialog(field.toString());
+            dialog.setTitle("Wert bearbeiten");
+            dialog.setHeaderText("Wert bearbeiten");
+            dialog.setContentText(field.getName());
+
+            Optional<String> result = dialog.showAndWait();
+            if(result.isPresent()) {
+                String currentValue = field.toString();
+                if(!field.setValueFromString(result.get())) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Validierungsfehler");
+
+                    alert.setHeaderText(null);
+                    alert.setContentText("Die eingegebenen Daten sind für dieses Feld ungültig.");
+
+                    alert.showAndWait();
+                }
+                else
+                {
+                    this.repository.setNewValue(field);
+                    byte[] writeAddr = BigInteger.valueOf(field.getAddress()).toByteArray();
+                    repository.getSerialComm().sendCommand(CommandMode.WRITE_MEMORY, writeAddr, field.getBytes());
+                    field.setValueFromString(currentValue);
+                }
             }
         }
     }
