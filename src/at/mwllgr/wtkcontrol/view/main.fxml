@@ -74,7 +74,6 @@
          </GridPane.margin></CheckBox>
       <Button fx:id="btnSettings" mnemonicParsing="false" text="Einstellg." GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <Label snapToPixel="false" text="WALLINGER&#10;3AHIF" GridPane.columnIndex="6" GridPane.rowIndex="9" />
-      <Button fx:id="btnImport" mnemonicParsing="false" text="Import" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
       <Button fx:id="btnExport" mnemonicParsing="false" text="Export" GridPane.columnIndex="5" GridPane.rowIndex="9" />
       <Button fx:id="btnAddressList" mnemonicParsing="false" onAction="#selectAddressList" text="Adressliste" GridPane.columnIndex="2" GridPane.rowIndex="9" />
       <Label text="Daten für CRC-Berechnung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="5" />

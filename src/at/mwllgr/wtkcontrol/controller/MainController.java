@@ -33,7 +33,7 @@ public class MainController {
     private TextArea txtRaw, txtRead, txtCrcCalc, txtCrc;
 
     @FXML
-    private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnImport, btnExport;
+    private Button btnSync, btnRead, btnWakeup, btnClearBuffer, btnOpenClosePort, btnSettings, btnAddressList, btnExport;
     final FileChooser fileChooser = new FileChooser();
 
     private final Repository repository = Repository.getInstance();
