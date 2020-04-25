@@ -46,7 +46,7 @@ public class DateDataField extends DataField {
         return new byte[] {
                 Integer.valueOf(this.getValue().getDayOfMonth()).byteValue(),
                 Integer.valueOf(this.getValue().getMonthValue()).byteValue(),
-                Integer.valueOf(Integer.parseInt(twoDigitYearFmt.format(this.getValue()))).byteValue()
+                Integer.valueOf(Integer.parseInt(this.getValue().format(DateTimeFormatter.ofPattern("yy")))).byteValue()
         };
     }
 

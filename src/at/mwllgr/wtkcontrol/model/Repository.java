@@ -259,8 +259,9 @@ public class Repository {
                     break;
             }
 
-            String parseInfo = String.format("%-25s= %s", field.getName(), newField.toString());
-            if(!txtRead.get().isEmpty()) parseInfo = "\n" + parseInfo;
+            String parseInfo = "";
+            parseInfo = String.format("%-25s= %s", field.getName(), newField.toString() + " (" + Tools.getByteArrayAsHexString(newField.getBytes(), true) + ")");
+            parseInfo = "\n" + parseInfo;
             String finalParseInfo = parseInfo;
             javafx.application.Platform.runLater( () -> txtRead.set(txtRead.get() + finalParseInfo));
             System.out.print(parseInfo);

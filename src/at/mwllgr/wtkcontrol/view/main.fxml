@@ -3,6 +3,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <GridPane alignment="center" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="750.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.mwllgr.wtkcontrol.controller.MainController">
    <rowConstraints>
@@ -19,7 +20,7 @@
    </rowConstraints>
    <columnConstraints>
       <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="89.0" prefWidth="83.0" />
-      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="80.0" prefWidth="80.0" />
+      <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="90.0" prefWidth="90.0" />
       <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="340.0" />
       <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="15.0" prefWidth="310.0" />
       <ColumnConstraints maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="340.0" />
@@ -54,30 +55,47 @@
       <TextArea fx:id="txtRaw" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Erhaltene Bytes" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets right="7.0" />
-         </GridPane.margin></TextArea>
+         </GridPane.margin>
+         <font>
+            <Font name="Bitstream Vera Sans Mono" size="13.0" />
+         </font></TextArea>
       <Label text="Eingelesene Daten:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="3" />
       <TextArea fx:id="txtRead" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Verarbeitete Bytes mit Werten" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets right="7.0" />
-         </GridPane.margin></TextArea>
+         </GridPane.margin>
+         <font>
+            <Font name="Bitstream Vera Sans Mono" size="12.0" />
+         </font></TextArea>
       <TextArea fx:id="txtCrcCalc" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Bytes, die zur CRC-Berechnung verwendet werden" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="6">
          <GridPane.margin>
             <Insets right="7.0" />
-         </GridPane.margin></TextArea>
+         </GridPane.margin>
+         <font>
+            <Font name="Bitstream Vera Sans Mono" size="13.0" />
+         </font></TextArea>
       <TextArea fx:id="txtCrc" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Erhaltene und berechnete CRC-Prüfsumme" wrapText="true" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="8">
          <GridPane.margin>
             <Insets right="7.0" />
-         </GridPane.margin></TextArea>
+         </GridPane.margin>
+         <font>
+            <Font name="Bitstream Vera Sans Mono" size="13.0" />
+         </font></TextArea>
       <CheckBox fx:id="chkLogger" disable="true" mnemonicParsing="false" text="Logger" GridPane.rowIndex="9">
          <GridPane.margin>
             <Insets left="7.0" />
          </GridPane.margin></CheckBox>
-      <Button fx:id="btnSettings" mnemonicParsing="false" text="Einstellg." GridPane.columnIndex="1" GridPane.rowIndex="9" />
-      <Label snapToPixel="false" text="WALLINGER&#10;3AHIF" GridPane.columnIndex="6" GridPane.rowIndex="9" />
-      <Button fx:id="btnExport" mnemonicParsing="false" text="Export" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-      <Button fx:id="btnAddressList" mnemonicParsing="false" onAction="#selectAddressList" text="Adressliste" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <Label snapToPixel="false" text="mwllgr" textAlignment="RIGHT" GridPane.columnIndex="6" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+         <GridPane.margin>
+            <Insets right="7.0" />
+         </GridPane.margin></Label>
+      <Button fx:id="btnExport" disable="true" mnemonicParsing="false" text="Export" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="9" />
+      <Button fx:id="btnAddressList" mnemonicParsing="false" onAction="#selectAddressList" text="Adressliste" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <Label text="Daten für CRC-Berechnung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="5" />
       <Label text="CRC-Überprüfung:" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="7" />
-      <ComboBox fx:id="cmbPorts" editable="true" prefWidth="150.0" promptText="Port" GridPane.columnIndex="6" />
+      <ComboBox fx:id="cmbPorts" editable="true" prefWidth="150.0" promptText="Port" GridPane.columnIndex="6">
+         <GridPane.margin>
+            <Insets right="7.0" />
+         </GridPane.margin></ComboBox>
    </children>
 </GridPane>
