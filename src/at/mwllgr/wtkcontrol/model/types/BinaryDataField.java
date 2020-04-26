@@ -49,9 +49,14 @@ public class BinaryDataField extends DataField {
     }
 
     public boolean setValueFromString(String binaryString) {
-        if(binaryString.length() <= 8) {
-            int newValue = Integer.parseInt(binaryString, BINARY_RADIX);
-            this.setValue(newValue);
+        if (binaryString.length() <= 8 && binaryString.matches("[01].*")) {
+            try {
+                int newValue = Integer.parseInt(binaryString, BINARY_RADIX);
+                this.setValue(newValue);
+            } catch (NumberFormatException ex) {
+                return false;
+            }
+
             return true;
         } else {
             return false;
