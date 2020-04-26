@@ -1,4 +1,5 @@
-import at.mwllgr.wtkcontrol.model.TimeWith24;
+package at.mwllgr.wtkcontrol.model;
+
 import org.junit.*;
 
 import static org.junit.Assert.*;
