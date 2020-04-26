@@ -3,6 +3,7 @@ package at.mwllgr.wtkcontrol.model.types;
 import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 
 /**
  * Type:    Short (n)
@@ -58,9 +59,7 @@ public class ShortDataField extends DataField {
     }
 
     public byte[] getBytes() {
-        return new byte[] {
-                Integer.valueOf(this.getValue()).byteValue()
-        };
+        return ByteBuffer.allocate(2).putChar((char) this.getValue()).array();
     }
 
     @Override
