@@ -38,8 +38,10 @@ public class BooleanDataFieldTest {
     public void testSetBooleanWorks() {
         booleanField.setValue(true);
         assertTrue(booleanField.getValue());
+        assertEquals("1", booleanField.toString());
         booleanField.setValue(false);
         assertFalse(booleanField.getValue());
+        assertEquals("0", booleanField.toString());
     }
 
     /**
