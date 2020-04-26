@@ -12,7 +12,7 @@ public class ShortDataFieldTest {
     ShortDataField shortField;
 
     public ShortDataFieldTest() {
-        mainField = new DataField("Char field", "0.00", 0x00, 0x02, DataFieldType.UNSIGNED_SHORT, 0, 64300);
+        mainField = new DataField("Short field", "0.00", 0x00, 0x02, DataFieldType.UNSIGNED_SHORT, 0, 64300);
         shortField = new ShortDataField(mainField);
     }
 
