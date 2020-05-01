@@ -1,16 +1,14 @@
 package at.mwllgr.wtkcontrol.listener;
 
-import at.mwllgr.wtkcontrol.controller.CRC16;
-import at.mwllgr.wtkcontrol.controller.SerialController;
-import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.globals.ResponseMode;
-import at.mwllgr.wtkcontrol.model.DataField;
+import at.mwllgr.wtkcontrol.helpers.CRC16;
+import at.mwllgr.wtkcontrol.helpers.SerialHelper;
+import at.mwllgr.wtkcontrol.helpers.Tools;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
-import javafx.scene.control.Alert;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -94,7 +92,7 @@ public class SerialListener implements SerialPortDataListener {
                 System.out.println("Received response: WRITE_RESPONSE");
                 // Read values again
                 this.clearBuffer();
-                repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repo.getBytesToRead());
+                repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repo.getBytesToRead());
             }
         }
         else

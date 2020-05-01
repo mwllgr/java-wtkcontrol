@@ -1,4 +1,4 @@
-package at.mwllgr.wtkcontrol.controller;
+package at.mwllgr.wtkcontrol.helpers;
 
 import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.listener.SerialListener;
@@ -10,21 +10,23 @@ import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class SerialController {
-    public static final byte[] FULLREAD_START_ADDR = { 0x00, 0x00 };
-    static final byte[] COMMAND_START = { 0x10, 0x02 };
-    static final byte[] SLAVE_ADDR = { 0x01 };
-    static final byte[] COMMAND_END = { 0x10, 0x03 };
+public class SerialHelper {
+    public static final byte[] FULLREAD_START_ADDR = {0x00, 0x00};
+    static final byte[] COMMAND_START = {0x10, 0x02};
+    static final byte[] SLAVE_ADDR = {0x01};
+    static final byte[] COMMAND_END = {0x10, 0x03};
 
     // Singleton
-    private static SerialController instance;
+    private static SerialHelper instance;
 
-    private SerialController() { }
-    public static SerialController getInstance () {
-        if (SerialController.instance == null) {
-            SerialController.instance = new SerialController();
+    private SerialHelper() {
+    }
+
+    public static SerialHelper getInstance() {
+        if (SerialHelper.instance == null) {
+            SerialHelper.instance = new SerialHelper();
         }
-        return SerialController.instance;
+        return SerialHelper.instance;
     }
 
     SerialPort port; // Currently used serial port

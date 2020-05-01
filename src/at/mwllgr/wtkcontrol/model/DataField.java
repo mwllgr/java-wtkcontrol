@@ -1,7 +1,7 @@
 package at.mwllgr.wtkcontrol.model;
 
-import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.helpers.Tools;
 import javafx.beans.property.SimpleStringProperty;
 
 /**

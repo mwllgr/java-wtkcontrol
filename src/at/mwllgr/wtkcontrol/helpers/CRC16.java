@@ -1,4 +1,4 @@
-package at.mwllgr.wtkcontrol.controller;
+package at.mwllgr.wtkcontrol.helpers;
 
 import java.math.BigInteger;
 import java.util.Arrays;

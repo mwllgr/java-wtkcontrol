@@ -1,5 +1,6 @@
 package at.mwllgr.wtkcontrol.controller;
 
+import at.mwllgr.wtkcontrol.helpers.CRC16;
 import org.junit.*;
 
 import static org.junit.Assert.assertArrayEquals;

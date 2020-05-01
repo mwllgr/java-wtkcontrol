@@ -2,6 +2,7 @@ package at.mwllgr.wtkcontrol.controller;
 
 import at.mwllgr.wtkcontrol.dialogs.BooleanDialog;
 import at.mwllgr.wtkcontrol.globals.CommandMode;
+import at.mwllgr.wtkcontrol.helpers.SerialHelper;
 import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
 import at.mwllgr.wtkcontrol.model.types.BooleanDataField;
@@ -176,7 +177,7 @@ public class MainController {
     @FXML
     private void fullRead(ActionEvent event) {
         this.clearBuffer(null);
-        repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialController.FULLREAD_START_ADDR, repository.getBytesToRead());
+        repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repository.getBytesToRead());
     }
 
     /**

@@ -1,9 +1,9 @@
 package at.mwllgr.wtkcontrol.model;
 
-import at.mwllgr.wtkcontrol.controller.SerialController;
-import at.mwllgr.wtkcontrol.controller.Tools;
 import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
+import at.mwllgr.wtkcontrol.helpers.SerialHelper;
+import at.mwllgr.wtkcontrol.helpers.Tools;
 import at.mwllgr.wtkcontrol.model.types.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -26,7 +26,7 @@ import java.util.stream.Stream;
  */
 public class Repository {
     static final String CSV_SEPARATOR = ",";
-    private final SerialController serialComm = SerialController.getInstance();
+    private final SerialHelper serialComm = SerialHelper.getInstance();
     private DataField newValue;
 
     // Text areas in main GUI
@@ -55,7 +55,7 @@ public class Repository {
         return Repository.instance;
     }
 
-    public SerialController getSerialComm() {
+    public SerialHelper getSerialComm() {
         return serialComm;
     }
 

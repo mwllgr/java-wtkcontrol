@@ -1,4 +1,4 @@
-package at.mwllgr.wtkcontrol.controller;
+package at.mwllgr.wtkcontrol.helpers;
 
 /**
  * This class contains neat functions that are used throughout the program.
