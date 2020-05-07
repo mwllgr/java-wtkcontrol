@@ -13,3 +13,9 @@ The documentation is available in PDF only (school requirement).
 You can check it out here: [WtkControl_mwllgr.pdf](WtkControl_mwllgr.pdf)
 
 As the main business area for this specific model is Germany and Austria, the program UI is written in German.
+
+## Screenshots
+
+### Main window
+
+![WtkControl main window](WtkControl_Main.png)
