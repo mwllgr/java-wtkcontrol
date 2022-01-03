@@ -15,7 +15,7 @@ java -jar wtkcontrol-1.0.jar
 ```
 
 Start by selecting an address file and opening the serial port - you might have enter the device name manually (e.g. `COM1` or `ttyUSB0`).  
-Java >= 11 is required to run the file.
+Java version >= 11 is required to run the file.
 
 ## Documentation
 The documentation is available in PDF only (school requirement).  
