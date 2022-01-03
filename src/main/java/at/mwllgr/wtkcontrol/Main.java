@@ -6,6 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Use MainWrapper instead of this class for running the program!
+ */
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
