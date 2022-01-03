@@ -4,6 +4,7 @@ import at.mwllgr.wtkcontrol.model.DataField;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Locale;
 
 /**
  * Type:    Float (f)
@@ -63,6 +64,6 @@ public class FloatDataField extends DataField {
 
     @Override
     public String toString() {
-        return String.format("%.1f", this.getValue());
+        return String.format(Locale.US, "%.1f", this.getValue());
     }
 }
