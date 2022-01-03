@@ -2,10 +2,9 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DateDataFieldTest {
     DataField mainField;
@@ -14,22 +13,6 @@ public class DateDataFieldTest {
     public DateDataFieldTest() {
         mainField = new DataField("Date field", "0.00", 0x00, 0x03, DataFieldType.DATE);
         dateField = new DateDataField(mainField);
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**

@@ -16,10 +16,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="WtkControl" />
+        <module name="wtkcontrol" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="wtkcontrol" target="8" />
       <module name="WtkControl" target="17" />
     </bytecodeTargetLevel>
   </component>

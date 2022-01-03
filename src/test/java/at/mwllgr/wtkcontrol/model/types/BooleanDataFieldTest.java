@@ -2,9 +2,9 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BooleanDataFieldTest {
     DataField mainField;
@@ -13,22 +13,6 @@ public class BooleanDataFieldTest {
     public BooleanDataFieldTest() {
         mainField = new DataField("Bool field", "0.00", 0x00, 0x01, DataFieldType.UNSIGNED_CHAR, 0, 1);
         booleanField = new BooleanDataField(mainField);
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**

@@ -2,10 +2,9 @@ package at.mwllgr.wtkcontrol.model.types;
 
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.model.DataField;
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ShortDataFieldTest {
     DataField mainField;
@@ -14,22 +13,6 @@ public class ShortDataFieldTest {
     public ShortDataFieldTest() {
         mainField = new DataField("Short field", "0.00", 0x00, 0x02, DataFieldType.UNSIGNED_SHORT, 0, 64300);
         shortField = new ShortDataField(mainField);
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**

@@ -1,27 +1,11 @@
 package at.mwllgr.wtkcontrol.helpers;
 
-import org.junit.*;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class CRC16Test {
     public CRC16Test() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**

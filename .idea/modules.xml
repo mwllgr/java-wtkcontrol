@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WtkControl.iml" filepath="$PROJECT_DIR$/WtkControl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wtkcontrol.iml" filepath="$PROJECT_DIR$/wtkcontrol.iml" />
     </modules>
   </component>
 </project>

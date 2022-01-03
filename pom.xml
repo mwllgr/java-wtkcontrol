@@ -9,10 +9,9 @@
     <version>1.0</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <javafx.version>17.0.1</javafx.version>
-        <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <maven.compiler.release>11</maven.compiler.release>
+        <javafx.version>11</javafx.version>
+        <javafx.maven.plugin.version>0.0.5</javafx.maven.plugin.version>
     </properties>
 
     <dependencies>
@@ -54,13 +53,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.8.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.8.2</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -73,6 +70,11 @@
                 <configuration>
                     <mainClass>at.mwllgr.wtkcontrol.MainWrapper</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
