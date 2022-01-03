@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="wtkcontrol" target="8" />
+      <module name="wtkcontrol" target="11" />
       <module name="WtkControl" target="17" />
     </bytecodeTargetLevel>
   </component>
