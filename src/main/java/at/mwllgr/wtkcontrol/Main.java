@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/main.fxml"));
         primaryStage.setTitle("WtkControl");
         primaryStage.setScene(new Scene(root, 750, 500));
         primaryStage.show();
