@@ -94,6 +94,9 @@ public class Cli {
         System.out.printf("%4s  %s%n", "10", "Missing parameter or parameter value");
         System.out.printf("%4s  %s%n", "11", "Serial port (communication) error");
         System.out.printf("%4s  %s%n", "12", "File error, e.g. address file not found");
+        System.out.printf("%4s  %s%n", "13", "Field for read/write operation not found in address file");
+        System.out.printf("%4s  %s%n", "14", "Field for write operation is read-only");
+        System.out.printf("%4s  %s%n", "15", "Validation error: Value has invalid format or is not in a valid range");
         System.exit(0);
     }
 }
