@@ -1,6 +1,7 @@
 package at.mwllgr.wtkcontrol.helpers;
 
 import at.mwllgr.wtkcontrol.globals.CommandMode;
+import at.mwllgr.wtkcontrol.globals.ExitCode;
 import at.mwllgr.wtkcontrol.listener.SerialListener;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
@@ -63,7 +64,7 @@ public class SerialHelper {
             WtkLogger.getInstance().logGui("OK");
             openOrCloseSerialPort();
         } catch (SerialPortInvalidPortException ex) {
-            WtkLogger.getInstance().error("Error opening serial port!");
+            WtkLogger.getInstance().error("Error opening serial port: " + ex.getMessage());
 
             if(!Repository.getInstance().isNoGuiMode()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -73,6 +74,8 @@ public class SerialHelper {
                 alert.setContentText("Überprüfen Sie den eingegebenen Port.");
 
                 alert.showAndWait();
+            } else {
+                System.exit(ExitCode.SERIAL_ERROR);
             }
         }
 

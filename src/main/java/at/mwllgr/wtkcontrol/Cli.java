@@ -1,6 +1,7 @@
 package at.mwllgr.wtkcontrol;
 
 import at.mwllgr.wtkcontrol.globals.CommandMode;
+import at.mwllgr.wtkcontrol.globals.ExitCode;
 import at.mwllgr.wtkcontrol.helpers.SerialHelper;
 import at.mwllgr.wtkcontrol.helpers.WtkLogger;
 import at.mwllgr.wtkcontrol.model.Repository;
@@ -22,6 +23,11 @@ public class Cli {
 
     private Cli(String[] args) {
         argList = Arrays.asList(args);
+
+        if(argList.contains("-h") || argList.contains("--help")) {
+            showHelpAndExit();
+        }
+
         setAddressList();
         setupSerialPort();
         setupLogger();
@@ -37,7 +43,7 @@ public class Cli {
 
         if(!repo.setAddressList(new File(addressList))) {
             WtkLogger.getInstance().error("Cannot read address list: " + addressList);
-            System.exit(255);
+            System.exit(ExitCode.FILE_ERROR);
         }
     }
 
@@ -48,7 +54,7 @@ public class Cli {
             this.repo.getSerialComm().sendWakeupCmd();
         } else {
             WtkLogger.getInstance().error("Serial device (parameter --port) not specified!");
-            System.exit(255);
+            System.exit(ExitCode.MISSING_PARAMETER);
         }
     }
 
@@ -67,7 +73,27 @@ public class Cli {
             );
         } else {
             WtkLogger.getInstance().error("Address file not selected/parsed yet!");
-            System.exit(255);
+            System.exit(ExitCode.FILE_ERROR);
         }
+    }
+
+    private void showHelpAndExit() {
+        System.out.println("--- wtkcontrol: Help ---");
+        System.out.println();
+        System.out.println("Attention:" + System.lineSeparator() + "All parameters only work in no-GUI mode!");
+        System.out.println();
+        System.out.println("Parameters:");
+        System.out.printf("  %-20s%s%n", "--no-gui", "Starts the application in CLI mode");
+        System.out.printf("  %-20s%s%n", "--port <device>", "[Required] Selects the serial port device");
+        System.out.printf("  %-20s%s%n", "--address-file", "Specifies the comma-separated address list, defaults to address-list.csv");
+        System.out.printf("  %-20s%s%n", "--logger", "Only used in read mode: Saves the received values into wtk logger-dd-MM-yyyy_hh-mm-ss.cs before the application exits");
+        System.out.printf("  %-20s%s%n", "--help, -h", "Shows this help text");
+        System.out.println();
+        System.out.println("Exit codes:");
+        System.out.printf("%4s  %s%n", "1", "General error");
+        System.out.printf("%4s  %s%n", "10", "Missing parameter or parameter value");
+        System.out.printf("%4s  %s%n", "11", "Serial port (communication) error");
+        System.out.printf("%4s  %s%n", "12", "File error, e.g. address file not found");
+        System.exit(0);
     }
 }
