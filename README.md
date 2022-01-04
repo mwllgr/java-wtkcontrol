@@ -48,6 +48,18 @@ The following parameters *do not control any GUI elements* and are only working 
 | --address-list \<file\> | Specifies the comma-separated address list                                                                                | No           | `address-list.csv` |
 | --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.cs` before the application exits | No           | -                  |
 
+### Exit codes
+
+| **Code** | **Description**                                                       |
+|----------|-----------------------------------------------------------------------|
+| 1        | General error                                                         |
+| 10       | Missing parameter or parameter value                                  |
+| 11       | Serial port (communication) error                                     |
+| 12       | File error, e.g. address file not found                               |
+| 13       | Field for read/write operation not found in address file              |
+| 14       | Field for write operation is read-only                                |
+| 15       | Validation error: Value has invalid format or is not in a valid range |
+
 ## Documentation
 The documentation is available in PDF only (school requirement).  
 You can check it out here: [WtkControl_mwllgr.pdf](WtkControl_mwllgr.pdf)
