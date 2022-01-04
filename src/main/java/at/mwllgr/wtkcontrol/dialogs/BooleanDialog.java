@@ -1,5 +1,6 @@
 package at.mwllgr.wtkcontrol.dialogs;
 
+import at.mwllgr.wtkcontrol.helpers.WtkLogger;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -55,7 +56,7 @@ public class BooleanDialog {
         Optional<Boolean> result = dialog.showAndWait();
 
         if(result.isPresent()) {
-            System.out.println(this.changeValue + " = " + result.get().toString());
+            WtkLogger.getInstance().logGui(this.changeValue + " = " + result.get().toString());
             // Return correct value for serial communication
             return result.get() ? "1" : "0";
         }

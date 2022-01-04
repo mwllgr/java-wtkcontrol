@@ -4,6 +4,7 @@ import at.mwllgr.wtkcontrol.globals.DataFieldOffset;
 import at.mwllgr.wtkcontrol.globals.DataFieldType;
 import at.mwllgr.wtkcontrol.helpers.SerialHelper;
 import at.mwllgr.wtkcontrol.helpers.Tools;
+import at.mwllgr.wtkcontrol.helpers.WtkLogger;
 import at.mwllgr.wtkcontrol.model.types.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -28,6 +29,7 @@ public class Repository {
     static final String CSV_SEPARATOR = ",";
     private final SerialHelper serialComm = SerialHelper.getInstance();
     private DataField newValue;
+    private boolean noGuiMode = false;
 
     // Text areas in main GUI
     private final StringProperty txtRaw = new SimpleStringProperty();
@@ -53,6 +55,12 @@ public class Repository {
             Repository.instance = new Repository ();
         }
         return Repository.instance;
+    }
+
+    public static Repository getInstance(boolean noGuiMode) {
+        Repository repo = getInstance();
+        repo.setNoGuiMode(noGuiMode);
+        return repo;
     }
 
     public SerialHelper getSerialComm() {
@@ -103,6 +111,18 @@ public class Repository {
         this.loggerEnabled = loggerEnabled;
     }
 
+    public boolean isNoGuiMode() {
+        return noGuiMode;
+    }
+
+    public void setNoGuiMode(boolean noGuiMode) {
+        this.noGuiMode = noGuiMode;
+    }
+
+    public boolean hasParsedMaxBytesToRead() {
+        return parsedMaxBytesToRead;
+    }
+
     /**
      * Initializes the HashMap and tries to read the CSV file.
      *
@@ -150,7 +170,7 @@ public class Repository {
         if(!parsedMaxBytesToRead) {
             // First line contains the (max) bytes to read
             bytesToRead = Tools.hexStringToByteArray(splitLine[DataFieldOffset.LENGTH]);
-            System.out.println("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead, true));
+            WtkLogger.getInstance().logGui("Bytes to read: " + Tools.getByteArrayAsHexString(bytesToRead, true));
             parsedMaxBytesToRead = true;
         } else {
             // Create data field from line
@@ -166,13 +186,13 @@ public class Repository {
                         Integer.parseInt(splitLine[DataFieldOffset.READONLY].trim()) != 0
                 );
             } catch (NumberFormatException numEx) {
-                System.err.println("ERR: CSV-Adressdaten ungültig! Fehler: " + numEx.getMessage());
+                WtkLogger.getInstance().errorGui("ERR: CSV-Adressdaten ungültig! Fehler: " + numEx.getMessage());
                 return;
             }
 
             String fieldInfo = currentField.toString();
             fieldInfo = txtRead.get() + fieldInfo;
-            System.out.println("Add field from CSV: " + fieldInfo);
+            WtkLogger.getInstance().logGui("Add field from CSV: " + fieldInfo);
             txtRead.set(fieldInfo + "\n");
 
             // Add to List
@@ -186,7 +206,7 @@ public class Repository {
      * @param responseBytes Bytes to parse
      */
     public void parseResponse(byte[] responseBytes) {
-        System.out.println("Parsing response...");
+        WtkLogger.getInstance().logGui("Parsing response...");
         int bytesToReadInt = new BigInteger(bytesToRead).intValue();
 
         // Offset for byte stuffing
@@ -206,10 +226,10 @@ public class Repository {
                     int dleSecond = responseBytes[field.getAddress() + i + 1];
                     if(dleFirst == 0x10 && dleSecond == 0x10) {
                         offset++;
-                        System.out.println("Skipped 0x10 - offset set to " + offset + "!");
+                        WtkLogger.getInstance().logGui("Skipped 0x10 - offset set to " + offset + "!");
                     }
                 } else {
-                    System.out.println("Byte stuff check skipped (end)");
+                    WtkLogger.getInstance().logGui("Byte stuff check skipped (end)");
                 }
 
                 byteValue[i] = responseBytes[field.getAddress() + i + offset];
@@ -263,7 +283,7 @@ public class Repository {
             String finalParseInfo = parseInfo;
             // Add line to "Read" TextArea
             javafx.application.Platform.runLater(() -> txtRead.set(txtRead.get() + finalParseInfo));
-            System.out.print(parseInfo);
+            WtkLogger.getInstance().logGui(parseInfo);
         }
 
         if (this.loggerEnabled) {
@@ -283,12 +303,12 @@ public class Repository {
      */
     public boolean writeToCsv(String fileName) {
         try {
-            System.out.println("Exporting to " + fileName + "...");
+            WtkLogger.getInstance().logGui("Exporting to " + fileName + "...");
             PrintWriter writer = new PrintWriter(fileName);
             writer.print(this.getCsvList());
             writer.close();
         } catch (IOException ex) {
-            System.err.println("ERR: " + ex.getMessage());
+            WtkLogger.getInstance().errorGui("ERR: " + ex.getMessage());
             return false;
         }
 

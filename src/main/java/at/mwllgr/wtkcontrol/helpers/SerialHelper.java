@@ -2,6 +2,7 @@ package at.mwllgr.wtkcontrol.helpers;
 
 import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.listener.SerialListener;
+import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortInvalidPortException;
 import javafx.scene.control.Alert;
@@ -41,7 +42,7 @@ public class SerialHelper {
     }
 
     public void clearBuffer() {
-        this.listener.clearBuffer();
+        if(this.getPortState()) this.listener.clearBuffer();
     }
 
     /***
@@ -52,24 +53,27 @@ public class SerialHelper {
      */
     public SerialPort setCommPort(String portName) {
         try {
-            System.out.print("Validating port: " + portName + "... ");
+            WtkLogger.getInstance().logGui("Validating port: " + portName + "... ");
 
             // Only overwrite variable if it's not the same port
             // We have to do this to keep track of the state
             if(this.port == null || !this.port.isOpen())
                 this.port = SerialPort.getCommPort(portName);
 
-            System.out.println("OK");
+            WtkLogger.getInstance().logGui("OK");
             openOrCloseSerialPort();
         } catch (SerialPortInvalidPortException ex) {
-            System.err.println("ERR");
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ungültiger Port");
+            WtkLogger.getInstance().error("Error opening serial port!");
 
-            alert.setHeaderText(null);
-            alert.setContentText("Überprüfen Sie den eingegebenen Port.");
+            if(!Repository.getInstance().isNoGuiMode()) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Ungültiger Port");
 
-            alert.showAndWait();
+                alert.setHeaderText(null);
+                alert.setContentText("Überprüfen Sie den eingegebenen Port.");
+
+                alert.showAndWait();
+            }
         }
 
         return null;
@@ -80,22 +84,22 @@ public class SerialHelper {
      */
     private void openOrCloseSerialPort() {
         if (this.port.isOpen()) {
-            System.out.print("Closing " + this.port.getSystemPortName() + "... ");
+            WtkLogger.getInstance().logGui("Closing " + this.port.getSystemPortName() + "... ");
             port.closePort();
-            System.out.println("OK");
+            WtkLogger.getInstance().logGui("OK");
         } else {
-            System.out.print("Opening " + this.port.getSystemPortName() + "... ");
+            WtkLogger.getInstance().logGui("Opening " + this.port.getSystemPortName() + "... ");
 
             this.port.setBaudRate(9600);
             if (this.port.openPort()) {
                 // Serial port opened successfully
-                System.out.println("OK");
+                WtkLogger.getInstance().logGui("OK");
 
                 // Add listener
                 listener = new SerialListener(port);
                 port.addDataListener(listener);
             } else {
-                System.err.println("ERR");
+                WtkLogger.getInstance().errorGui("ERR");
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Portfehler");
 
@@ -127,7 +131,7 @@ public class SerialHelper {
      * Sends "AT" and a carriage return
      */
     public void sendWakeupCmd() {
-        System.out.print("Sending wake up command... ");
+        WtkLogger.getInstance().logGui("Sending wake up command... ");
         this.writeBytesRaw(CommandMode.WAKEUP);
     }
 
@@ -137,7 +141,7 @@ public class SerialHelper {
     public void syncTimeDate() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         String outputString = currentDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yy HH:mm:ss"));
-        System.out.println("Setting date to: " + outputString);
+        WtkLogger.getInstance().logGui("Setting date to: " + outputString);
 
         byte[] writeDateTime = new byte[]{
                 Integer.valueOf(currentDateTime.getSecond()).byteValue(),
@@ -160,6 +164,11 @@ public class SerialHelper {
      * @param bytes Length or bytes to write
      */
     public void sendCommand(byte[] mode, byte[] addr, byte[] bytes) {
+        if(this.port == null || !this.port.isOpen()) {
+            WtkLogger.getInstance().error("Can't write to port: Port not opened!");
+            return;
+        }
+
         // Replace DLE with DLE DLE (byte stuffing)
         String rawBytes = Tools.getByteArrayAsHexString(bytes, true);
         rawBytes = rawBytes.replace("10", "1010").replace(" ", "");
@@ -199,16 +208,16 @@ public class SerialHelper {
         int result = this.port.writeBytes(buffer, buffer.length);
 
         if(result != -1) {
-            System.out.println("OK");
+            WtkLogger.getInstance().logGui("OK");
         }
         else
         {
-            System.err.println("ERR");
+            WtkLogger.getInstance().errorGui("ERR");
         }
 
-        System.out.print("Sent bytes: ");
-        System.out.println(Tools.getByteArrayAsHexString(buffer, true));
-        System.out.println();
+        WtkLogger.getInstance().logGui("Sent bytes: ");
+        WtkLogger.getInstance().logGui(Tools.getByteArrayAsHexString(buffer, true));
+        WtkLogger.getInstance().logGui("");
 
         return result;
     }

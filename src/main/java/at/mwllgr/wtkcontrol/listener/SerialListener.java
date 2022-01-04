@@ -5,6 +5,7 @@ import at.mwllgr.wtkcontrol.globals.ResponseMode;
 import at.mwllgr.wtkcontrol.helpers.CRC16;
 import at.mwllgr.wtkcontrol.helpers.SerialHelper;
 import at.mwllgr.wtkcontrol.helpers.Tools;
+import at.mwllgr.wtkcontrol.helpers.WtkLogger;
 import at.mwllgr.wtkcontrol.model.Repository;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
@@ -26,13 +27,13 @@ public class SerialListener implements SerialPortDataListener {
     public SerialListener(SerialPort port) {
         this.port = port;
         repo = Repository.getInstance();
-        System.out.println("SerialListener: Started!");
+        WtkLogger.getInstance().logGui("SerialListener: Started!");
     }
 
     public void clearBuffer() {
         this.hexBuffer = "";
         repo.setTxtRaw("");
-        System.out.println("Buffer cleared.");
+        WtkLogger.getInstance().logGui("Buffer cleared.");
     }
 
     @Override
@@ -53,7 +54,7 @@ public class SerialListener implements SerialPortDataListener {
         port.readBytes(newData, newData.length);
         hexBuffer += Tools.getByteArrayAsHexString(newData, false);
         repo.setTxtRaw(hexBuffer);
-        System.out.print(Tools.getByteArrayAsHexString(newData, false));
+        WtkLogger.getInstance().logGui(Tools.getByteArrayAsHexString(newData, false));
 
         Pattern pattern = Pattern.compile(COMPLETE_FRAME_REGEX);
         Matcher matcher = pattern.matcher(hexBuffer);
@@ -64,8 +65,8 @@ public class SerialListener implements SerialPortDataListener {
             String crcData = matcher.group(1);
             String recvCrc = matcher.group(2);
 
-            System.out.println("Complete frame received!");
-            System.out.println("CRC Data: " + crcData);
+            WtkLogger.getInstance().logGui("Complete frame received!");
+            WtkLogger.getInstance().logGui("CRC Data: " + crcData);
             handleCompleteFrame(crcData, recvCrc);
             hexBuffer = "";
         }
@@ -81,15 +82,15 @@ public class SerialListener implements SerialPortDataListener {
         byte[] responseBytes = Tools.hexStringToByteArray(crcData);
         repo.setTxtCrcCalc(crcData);
 
-        System.out.print("Checking CRC... ");
+        WtkLogger.getInstance().logGui("Checking CRC... ");
         if(checkCrc(responseBytes, Tools.hexStringToByteArray(recvCrc))) {
             if (responseBytes[1] == ResponseMode.READ_RESPONSE) {
-                System.out.println(" -> +CRC: OK");
-                System.out.println("Received response: READ_RESPONSE");
+                WtkLogger.getInstance().logGui(" -> +CRC: OK");
+                WtkLogger.getInstance().logGui("Received response: READ_RESPONSE");
                 repo.parseResponse(Arrays.copyOfRange(responseBytes, 2, responseBytes.length));
             } else if (responseBytes[1] == ResponseMode.WRITE_RESPONSE) {
                 // Write operation ACK
-                System.out.println("Received response: WRITE_RESPONSE");
+                WtkLogger.getInstance().logGui("Received response: WRITE_RESPONSE");
                 // Read values again
                 this.clearBuffer();
                 repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repo.getBytesToRead());
@@ -97,7 +98,7 @@ public class SerialListener implements SerialPortDataListener {
         }
         else
         {
-            System.err.println(" -> CRC: ERR");
+            WtkLogger.getInstance().errorGui(" -> CRC: ERR");
         }
     }
 
@@ -112,7 +113,7 @@ public class SerialListener implements SerialPortDataListener {
         String out = "CRC-Recv: " + Tools.getByteArrayAsHexString(recvCrcBytes, false)
                 + " - CRC-Calc: " + Tools.getByteArrayAsHexString(calcCrcBytes, false);
 
-        System.out.println(out);
+        WtkLogger.getInstance().logGui(out);
         repo.setTxtCrc(out);
         return Arrays.equals(calcCrcBytes, recvCrcBytes);
     }

@@ -3,6 +3,7 @@ package at.mwllgr.wtkcontrol.controller;
 import at.mwllgr.wtkcontrol.dialogs.BooleanDialog;
 import at.mwllgr.wtkcontrol.globals.CommandMode;
 import at.mwllgr.wtkcontrol.helpers.SerialHelper;
+import at.mwllgr.wtkcontrol.helpers.WtkLogger;
 import at.mwllgr.wtkcontrol.model.DataField;
 import at.mwllgr.wtkcontrol.model.Repository;
 import at.mwllgr.wtkcontrol.model.types.BooleanDataField;
@@ -176,8 +177,12 @@ public class MainController {
      */
     @FXML
     private void fullRead(ActionEvent event) {
-        this.clearBuffer(null);
-        repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repository.getBytesToRead());
+        if(repository.getSerialComm().getPortState()) this.clearBuffer(null);
+        if(repository.hasParsedMaxBytesToRead()) {
+            repository.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repository.getBytesToRead());
+        } else {
+            WtkLogger.getInstance().error("Address file not selected/parsed yet!");
+        }
     }
 
     /**
@@ -321,11 +326,11 @@ public class MainController {
             }));
             loggerTimer.setCycleCount(Timeline.INDEFINITE);
             loggerTimer.play();
-            System.out.println("Logger enabled");
+            WtkLogger.getInstance().logGui("Logger enabled");
         } else {
             loggerTimer.stop();
             repository.setLoggerEnabled(false);
-            System.out.println("Logger disabled");
+            WtkLogger.getInstance().logGui("Logger disabled");
         }
     }
 }
