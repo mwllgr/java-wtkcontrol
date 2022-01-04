@@ -9,9 +9,9 @@ It uses the RS232 serial port of the Resümat controller.
 Do not set any values if the corresponding readings don't match the displayed data on the control unit itself or if any other readings are not correct! I'm not responsible for any damage!
 
 ## Running it
-Download the release file (wtkcontrol-1.0.jar) from https://github.com/mwllgr/java-wtkcontrol/releases/tag/v1.0.0 and run it:
+Download the release file (wtkcontrol-1.1.jar) from https://github.com/mwllgr/java-wtkcontrol/releases/tag/v1.1.0 and run it:
 ```bash
-java -jar wtkcontrol-1.0.jar
+java -jar wtkcontrol-1.1.jar
 ```
 
 Start by selecting an address file and opening the serial port - you might have enter the device name manually (e.g. `COM1` or `ttyUSB0`).  
@@ -25,7 +25,7 @@ Currently, only reading every address value and printing them is possible.
 
 Example:
 ```shell
-java -jar wtkcontrol-1.0.jar --no-gui --port /dev/ttyUSB0
+java -jar wtkcontrol-1.1.jar --no-gui --port /dev/ttyUSB0
 ```
 
 Output example:
@@ -37,8 +37,6 @@ KomprBeginn-Zeit=01:01:01
 KomprBetrStunden=43935.9
 Unterbrechungen=00000000
 ```
-
-
 
 ### Available parameters
 The following parameters *do not control any GUI elements* and are only working when the program is started in `--no-gui` mode!
