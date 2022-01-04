@@ -1,8 +1,5 @@
 package at.mwllgr.wtkcontrol;
 
-import at.mwllgr.wtkcontrol.helpers.WtkLogger;
-import at.mwllgr.wtkcontrol.model.Repository;
-
 import java.util.Arrays;
 
 /**
