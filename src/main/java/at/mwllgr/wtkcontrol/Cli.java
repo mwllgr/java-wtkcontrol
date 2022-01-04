@@ -86,7 +86,7 @@ public class Cli {
         System.out.printf("  %-20s%s%n", "--no-gui", "Starts the application in CLI mode");
         System.out.printf("  %-20s%s%n", "--port <device>", "[Required] Selects the serial port device");
         System.out.printf("  %-20s%s%n", "--address-file", "Specifies the comma-separated address list, defaults to address-list.csv");
-        System.out.printf("  %-20s%s%n", "--logger", "Only used in read mode: Saves the received values into wtk logger-dd-MM-yyyy_hh-mm-ss.cs before the application exits");
+        System.out.printf("  %-20s%s%n", "--logger", "Only used in read mode: Saves the received values into wtk logger-dd-MM-yyyy_hh-mm-ss.csv before the application exits");
         System.out.printf("  %-20s%s%n", "--help, -h", "Shows this help text");
         System.out.println();
         System.out.println("Exit codes:");
