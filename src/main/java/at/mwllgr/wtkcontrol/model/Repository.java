@@ -282,12 +282,19 @@ public class Repository {
             parseInfo = "\n" + parseInfo;
             String finalParseInfo = parseInfo;
             // Add line to "Read" TextArea
-            javafx.application.Platform.runLater(() -> txtRead.set(txtRead.get() + finalParseInfo));
+            if(!this.isNoGuiMode()) javafx.application.Platform.runLater(() -> txtRead.set(txtRead.get() + finalParseInfo));
+
+            // Log as normal or no-GUI format
             WtkLogger.getInstance().logGui(parseInfo);
+            if(this.isNoGuiMode()) WtkLogger.getInstance().log(String.format("%s=%s", field.getName(), newField));
         }
 
         if (this.loggerEnabled) {
             this.writeToCsv("wtklogger-" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss")) + ".csv");
+        }
+
+        if(this.isNoGuiMode()) {
+            System.exit(0);
         }
     }
 
