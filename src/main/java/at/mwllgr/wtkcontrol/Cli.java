@@ -35,6 +35,9 @@ public class Cli {
         } else if(argList.contains("--wakeup")) {
             // Wake-up
             sendWakeUpCommand();
+        } else if(argList.contains("--time-sync")) {
+            // Date/time sync for RTC
+            sendTimeSyncCommand();
         }
 
         setAddressList();
@@ -55,6 +58,13 @@ public class Cli {
         this.setupSerialPort();
         this.repo.getSerialComm().sendWakeupCmd();
         System.out.println("Sent wake-up command!");
+        System.exit(0);
+    }
+
+    private void sendTimeSyncCommand() {
+        this.setupSerialPort();
+        this.repo.getSerialComm().syncTimeDate();
+        System.out.println("Sent date/time sync command!");
         System.exit(0);
     }
 
@@ -196,6 +206,7 @@ public class Cli {
         System.out.printf("  %-20s%s%n", "--value <data>", "Requires --write, <data> has to be in a valid format/range");
         System.out.printf("  %-20s%s%n", "--logger", "Only used in read mode: Saves the received values into wtk logger-dd-MM-yyyy_hh-mm-ss.csv before the application exits");
         System.out.printf("  %-20s%s%n", "--wakeup", "Sends a wake-up command to the heating controller");
+        System.out.printf("  %-20s%s%n", "--time-sync", "Sends a command to sync the RTC of the controller with the local date and time");
         System.out.printf("  %-20s%s%n", "--help, -h", "Shows this help text");
         System.out.println();
         System.out.println("Exit codes:");

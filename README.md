@@ -9,9 +9,9 @@ It uses the RS232 serial port of the Resümat controller.
 Do not set any values if the corresponding readings don't match the displayed data on the control unit itself or if any other readings are not correct! I'm not responsible for any damage!
 
 ## Running it
-Download the release file (wtkcontrol-1.2.jar) from https://github.com/mwllgr/java-wtkcontrol/releases/tag/v1.2.0 and run it:
+Download the release file (wtkcontrol-1.3.jar) from https://github.com/mwllgr/java-wtkcontrol/releases/tag/v1.3.0 and run it:
 ```bash
-java -jar wtkcontrol-1.2.jar
+java -jar wtkcontrol-1.3.jar
 ```
 
 Start by selecting an address file and opening the serial port - you might have enter the device name manually (e.g. `COM1` or `ttyUSB0`).  
@@ -26,7 +26,7 @@ Only reading every address value is possible in "read mode" right now. You'd hav
 ### Reading all values
 Example:
 ```shell
-java -jar wtkcontrol-1.2.jar --no-gui --port /dev/ttyUSB0
+java -jar wtkcontrol-1.3.jar --no-gui --port /dev/ttyUSB0
 ```
 
 Output example:
@@ -42,7 +42,7 @@ Unterbrechungen=00000000
 ### Writing/changing a value
 Example:
 ```shell
-java -jar wtkcontrol-1.2.jar --no-gui --port /dev/ttyUSB0 --write Ww-Temp-Soll --value 49.3
+java -jar wtkcontrol-1.3.jar --no-gui --port /dev/ttyUSB0 --write Ww-Temp-Soll --value 49.3
 ```
 
 Output example:
@@ -53,16 +53,17 @@ ACK received!
 ### Available parameters
 The following parameters *do not control any GUI elements* and are only working when the program is started in `--no-gui` mode!
 
-| **Parameter**           | **Description**                                                                                                           | **Required** | **Default**        |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------|--------------|--------------------|
-| --no-gui                | Prevents starting the application in GUI mode                                                                             | Yes            | -                  |
-| --port \<device\>       | Serial port device, e.g. `COM1` or `/dev/ttyUSB0`                                                                         | Yes          | -                  |
-| --address-list \<file\> | Specifies the comma-separated address list                                                                                | -           | `address-list.csv` |
-| --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.csv` before the application exits | -           | -                  |
-| --write \<name\>        | *Enables write mode:* Requires --value, writes <data> to field named <name> from CSV                                      | -           | -                  |
-| --value \<data\>        | Requires --write, <data> has to be in a valid format/range                                                                | With --write | -                  |
-| --wakeup                | Sends a wake-up command to the heating controller                                                                         | -            | -                  |
-| --help                  | Shows the CLI help                                                                                                        | -            | -                  |
+| **Parameter**           | **Description**                                                                                                            | **Required** | **Default**        |
+|-------------------------|----------------------------------------------------------------------------------------------------------------------------|--------------|--------------------|
+| --no-gui                | Prevents starting the application in GUI mode                                                                              | Yes          | -                  |
+| --port \<device\>       | Serial port device, e.g. `COM1` or `/dev/ttyUSB0`                                                                          | Yes          | -                  |
+| --address-list \<file\> | Specifies the comma-separated address list                                                                                 | -            | `address-list.csv` |
+| --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.csv` before the application exits | -            | -                  |
+| --write \<name\>        | *Enables write mode:* Requires --value, writes <data> to field named <name> from CSV                                       | -            | -                  |
+| --value \<data\>        | Requires --write, <data> has to be in a valid format/range                                                                 | With --write | -                  |
+| --wakeup                | Sends a wake-up command to the heating controller                                                                          | -            | -                  |
+| --time-sync             | Sends a command to sync the RTC of the controller with the local date and time                                             | -            | -                  |
+| --help                  | Shows the CLI help                                                                                                         | -            | -                  |
 
 ### Exit codes
 
