@@ -57,9 +57,9 @@ The following parameters *do not control any GUI elements* and are only working 
 |-------------------------|---------------------------------------------------------------------------------------------------------------------------|--------------|--------------------|
 | --no-gui                | Prevents starting the application in GUI mode                                                                             | Yes            | -                  |
 | --port \<device\>       | Serial port device, e.g. `COM1` or `/dev/ttyUSB0`                                                                         | Yes          | -                  |
-| --address-list \<file\> | Specifies the comma-separated address list                                                                                | No           | `address-list.csv` |
-| --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.cs` before the application exits | No           | -                  |
-| --write \<name\>        | *Enables write mode:* Requires --value, writes <data> to field named <name> from CSV                                      | No           | -                  |
+| --address-list \<file\> | Specifies the comma-separated address list                                                                                | -           | `address-list.csv` |
+| --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.cs` before the application exits | -           | -                  |
+| --write \<name\>        | *Enables write mode:* Requires --value, writes <data> to field named <name> from CSV                                      | -           | -                  |
 | --value \<data\>        | Requires --write, <data> has to be in a valid format/range                                                                | With --write | -                  |
 | --wakeup                | Sends a wake-up command to the heating controller                                                                         | -            | -                  |
 | --help                  | Shows the CLI help                                                                                                        | -            | -                  |
