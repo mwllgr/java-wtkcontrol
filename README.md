@@ -59,6 +59,7 @@ The following parameters *do not control any GUI elements* and are only working 
 | 13       | Field for read/write operation not found in address file              |
 | 14       | Field for write operation is read-only                                |
 | 15       | Validation error: Value has invalid format or is not in a valid range |
+| 16       | Address list malformed (e.g. invalid data type)                       |
 
 ## Documentation
 The documentation is available in PDF only (school requirement).  
