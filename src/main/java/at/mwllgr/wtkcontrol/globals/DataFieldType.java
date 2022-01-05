@@ -1,5 +1,7 @@
 package at.mwllgr.wtkcontrol.globals;
 
+import at.mwllgr.wtkcontrol.helpers.WtkLogger;
+
 /**
  * Enum for available data types.
  * Added functions for easier parsing of single-letter codes (as used in the CSV file).
@@ -29,6 +31,8 @@ public enum DataFieldType {
             }
         }
 
-        throw new IllegalArgumentException("No entry with text " + text + " found!");
+        WtkLogger.getInstance().error("Invalid data type '" + text + "' in CSV address list!");
+        System.exit(ExitCode.CSV_MALFORMED);
+        return null;
     }
 }

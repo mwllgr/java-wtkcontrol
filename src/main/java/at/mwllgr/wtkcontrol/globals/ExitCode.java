@@ -13,4 +13,5 @@ public final class ExitCode {
     public static final short FIELD_NOT_FOUND = 13;
     public static final short FIELD_READ_ONLY = 14;
     public static final short VALIDATION_ERROR = 15;
+    public static final short CSV_MALFORMED = 16;
 }

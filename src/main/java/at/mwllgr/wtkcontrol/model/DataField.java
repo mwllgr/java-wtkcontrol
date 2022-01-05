@@ -120,7 +120,9 @@ public class DataField {
     }
 
     // The following methods should be overridden in the subclasses
-    public boolean setValueFromString(String time) { return false; }
+    public boolean setValueFromString(String value) {
+        throw new RuntimeException("Not implemented in base class!");
+    }
 
     public byte[] getBytes() { return null; }
 }

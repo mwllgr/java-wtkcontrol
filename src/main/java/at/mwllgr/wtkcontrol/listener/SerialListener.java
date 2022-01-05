@@ -91,9 +91,14 @@ public class SerialListener implements SerialPortDataListener {
             } else if (responseBytes[1] == ResponseMode.WRITE_RESPONSE) {
                 // Write operation ACK
                 WtkLogger.getInstance().logGui("Received response: WRITE_RESPONSE");
-                // Read values again
-                this.clearBuffer();
-                repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repo.getBytesToRead());
+                if(!repo.isNoGuiMode()) {
+                    // Read values again
+                    this.clearBuffer();
+                    repo.getSerialComm().sendCommand(CommandMode.READ_MEMORY, SerialHelper.FULLREAD_START_ADDR, repo.getBytesToRead());
+                } else {
+                    WtkLogger.getInstance().log("ACK received!");
+                    System.exit(0);
+                }
             }
         }
         else

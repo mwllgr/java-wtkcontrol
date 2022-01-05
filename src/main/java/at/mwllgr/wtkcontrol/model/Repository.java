@@ -124,7 +124,7 @@ public class Repository {
     }
 
     /**
-     * Initializes the HashMap and tries to read the CSV file.
+     * Reads an address list CSV file.
      *
      * @param addressList File with address list
      * @return false on error
@@ -144,7 +144,7 @@ public class Repository {
     }
 
     /**
-     * Gets the file stream (skips 1st line) and calls addDataFieldToHashMap() for each line.
+     * Gets the file stream (skips 1st line) and calls addDataFieldToList() for each line.
      * @param file CSV file
      * @throws IOException on file error
      */
