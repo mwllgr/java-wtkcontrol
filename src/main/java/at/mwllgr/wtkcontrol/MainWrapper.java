@@ -1,6 +1,7 @@
 package at.mwllgr.wtkcontrol;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Needed for JavaFX to allow a proper application start.
@@ -8,7 +9,8 @@ import java.util.Arrays;
  */
 public class MainWrapper {
     public static void main(String[] args) {
-        if(args.length != 0 && Arrays.asList(args).contains("--no-gui")) {
+        List<String> argList = Arrays.asList(args);
+        if(args.length != 0 && (argList.contains("--no-gui") || argList.contains("--help") || argList.contains("-h"))) {
             // Continue as CLI application
             Cli.getInstance(args);
         } else {
