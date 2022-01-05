@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class SerialHelper {
     public static final byte[] FULLREAD_START_ADDR = {0x00, 0x00};
     static final byte[] COMMAND_START = {0x10, 0x02};
+    // static final byte[] COMMAND_START_WITH_WAKEUP = {0x41, 0x54, 0x0D, 0x10, 0x02};
     static final byte[] SLAVE_ADDR = {0x01};
     static final byte[] COMMAND_END = {0x10, 0x03};
 
@@ -189,10 +190,15 @@ public class SerialHelper {
         // Calculate the CRC
         byte[] crc = CRC16.calculate(crcCalcBytes);
 
+        // --- Might be needed if something with wakeup is wrong ---
+        //int startLength = Repository.getInstance().isNoGuiMode() ? COMMAND_START_WITH_WAKEUP.length : COMMAND_START.length;
+        //byte[] allBytes = new byte[startLength + crcCalcBytes.length + COMMAND_END.length + crc.length];
+
         // Prepare array for sending all the needed bytes
         byte[] allBytes = new byte[COMMAND_START.length + crcCalcBytes.length + COMMAND_END.length + crc.length];
 
         ByteBuffer buff = ByteBuffer.wrap(allBytes);
+        // buff.put(Repository.getInstance().isNoGuiMode() ? COMMAND_START_WITH_WAKEUP : COMMAND_START);
         buff.put(COMMAND_START);
         buff.put(crcCalcBytes);
         buff.put(COMMAND_END);

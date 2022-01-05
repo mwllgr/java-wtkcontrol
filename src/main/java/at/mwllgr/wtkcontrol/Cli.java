@@ -30,7 +30,11 @@ public class Cli {
         argList = Arrays.asList(args);
 
         if(argList.contains("-h") || argList.contains("--help")) {
+            // Help
             showHelpAndExit();
+        } else if(argList.contains("--wakeup")) {
+            // Wake-up
+            sendWakeUpCommand();
         }
 
         setAddressList();
@@ -38,11 +42,20 @@ public class Cli {
         setupLogger();
 
         if(argList.contains("--write")) {
+            // Write mode
             setField();
         } else {
+            // Read mode
             this.repo.getSerialComm().sendWakeupCmd();
             readAll();
         }
+    }
+
+    private void sendWakeUpCommand() {
+        this.setupSerialPort();
+        this.repo.getSerialComm().sendWakeupCmd();
+        System.out.println("Sent wake-up command!");
+        System.exit(0);
     }
 
     private void setAddressList() {
@@ -69,6 +82,7 @@ public class Cli {
     }
 
     private void setupLogger() {
+        // Logger enabled?
         if(argList.contains("--logger") && !argList.contains("--write")) {
             this.repo.setLoggerEnabled(true);
         }
@@ -165,7 +179,6 @@ public class Cli {
             return;
         }
 
-        this.repo.getSerialComm().sendWakeupCmd();
         byte[] writeAddr = BigInteger.valueOf(typedField.getAddress()).toByteArray();
         this.repo.getSerialComm().sendCommand(CommandMode.WRITE_MEMORY, writeAddr, typedField.getBytes());
     }
@@ -182,6 +195,7 @@ public class Cli {
         System.out.printf("  %-20s%s%n", "--write <name>", "Requires --value, writes <data> to field named <name>");
         System.out.printf("  %-20s%s%n", "--value <data>", "Requires --write, <data> has to be in a valid format/range");
         System.out.printf("  %-20s%s%n", "--logger", "Only used in read mode: Saves the received values into wtk logger-dd-MM-yyyy_hh-mm-ss.csv before the application exits");
+        System.out.printf("  %-20s%s%n", "--wakeup", "Sends a wake-up command to the heating controller");
         System.out.printf("  %-20s%s%n", "--help, -h", "Shows this help text");
         System.out.println();
         System.out.println("Exit codes:");
