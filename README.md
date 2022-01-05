@@ -21,11 +21,12 @@ Java version >= 11 is required to run the file.
 You can run the program without a GUI by using the parameter `--no-gui` with an appended `--port <device>`.  
 When an `--address-list <file>` is not given, the file `address-list.csv` is used.
 
-Currently, only reading every address value and printing them is possible.
+Currently, only reading every address value and is possible. You'd have to use a different CSV file if you only want to read specific values.
 
+### Reading all values
 Example:
 ```shell
-java -jar wtkcontrol-1.1.jar --no-gui --port /dev/ttyUSB0
+java -jar wtkcontrol-1.2.jar --no-gui --port /dev/ttyUSB0
 ```
 
 Output example:
@@ -38,6 +39,17 @@ KomprBetrStunden=43935.9
 Unterbrechungen=00000000
 ```
 
+### Writing/changing a value
+Example:
+```shell
+java -jar wtkcontrol-1.2.jar --no-gui --port /dev/ttyUSB0 --write Ww-Temp-Soll --value 49.3
+```
+
+Output example:
+```
+ACK received!
+```
+
 ### Available parameters
 The following parameters *do not control any GUI elements* and are only working when the program is started in `--no-gui` mode!
 
@@ -47,6 +59,9 @@ The following parameters *do not control any GUI elements* and are only working 
 | --port \<device\>       | Serial port device, e.g. `COM1` or `/dev/ttyUSB0`                                                                         | Yes          | -                  |
 | --address-list \<file\> | Specifies the comma-separated address list                                                                                | No           | `address-list.csv` |
 | --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.cs` before the application exits | No           | -                  |
+| --write \<name\>        | *Enables write mode:* Requires --value, writes <data> to field named <name> from CSV                                      | No           | -                  |
+| --value \<data\>        | Requires --write, <data> has to be in a valid format/range                                                                | With --write | -                  |
+| --wakeup                | Sends a wake-up command to the heating controller                                                                         | -            | -                  |
 
 ### Exit codes
 
