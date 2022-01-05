@@ -55,7 +55,7 @@ The following parameters *do not control any GUI elements* and are only working 
 
 | **Parameter**           | **Description**                                                                                                           | **Required** | **Default**        |
 |-------------------------|---------------------------------------------------------------------------------------------------------------------------|--------------|--------------------|
-| --no-gui                | Prevents starting the application in GUI mode                                                                             | -            | -                  |
+| --no-gui                | Prevents starting the application in GUI mode                                                                             | Yes            | -                  |
 | --port \<device\>       | Serial port device, e.g. `COM1` or `/dev/ttyUSB0`                                                                         | Yes          | -                  |
 | --address-list \<file\> | Specifies the comma-separated address list                                                                                | No           | `address-list.csv` |
 | --logger                | *Only used in read mode:* Saves the received values into `wtk logger-dd-MM-yyyy_hh-mm-ss.cs` before the application exits | No           | -                  |
