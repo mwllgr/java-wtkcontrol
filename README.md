@@ -62,6 +62,7 @@ The following parameters *do not control any GUI elements* and are only working 
 | --write \<name\>        | *Enables write mode:* Requires --value, writes <data> to field named <name> from CSV                                      | No           | -                  |
 | --value \<data\>        | Requires --write, <data> has to be in a valid format/range                                                                | With --write | -                  |
 | --wakeup                | Sends a wake-up command to the heating controller                                                                         | -            | -                  |
+| --help                  | Shows the CLI help                                                                                                        | -            | -                  |
 
 ### Exit codes
 
