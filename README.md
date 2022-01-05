@@ -79,10 +79,13 @@ The following parameters *do not control any GUI elements* and are only working 
 | 16       | Address list malformed (e.g. invalid data type)                       |
 
 ## Documentation
-The documentation is available in PDF only (school requirement).  
+A documentation for the GUI and the protocol is available in PDF only (school requirement).  
 You can check it out here: [WtkControl_mwllgr.pdf](WtkControl_mwllgr.pdf)
 
 As the main business area for this specific model is Germany and Austria, the program UI is written in German.
+
+## Protocol description
+An extended description of the protocol is available at [fhem-waterkotte-resuemat-cd4](https://github.com/mwllgr/fhem-waterkotte-resuemat-cd4#protocol-analysis).
 
 ## Screenshots
 
