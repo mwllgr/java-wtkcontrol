@@ -69,7 +69,7 @@ public class Cli {
     }
 
     private void setupLogger() {
-        if(argList.contains("--logger")) {
+        if(argList.contains("--logger") && !argList.contains("--write")) {
             this.repo.setLoggerEnabled(true);
         }
     }
